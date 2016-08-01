@@ -214,7 +214,7 @@ export default class ReactSelectMe extends Component {
         onKeyDown={this.onSearch}
         onFocus={this.onSearch}
         onClick={this.onSearch}
-        placeholder={selectedOptions.length ? '' : placeholder}
+        placeholder={selectedOptions.length || selectedOptions.size ? '' : placeholder}
         ref={e => (this.searchInput = e)}
       >
         {searchString}
