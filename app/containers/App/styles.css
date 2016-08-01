@@ -1,9 +1,29 @@
-/**
- * styles.css
- *
- * App container styles
- */
-
-.container {
-  display: block;
+.page {
+  max-width: 400px;
+  margin: auto;
 }
+
+  .example {
+    margin-bottom: 50px;
+  }
+
+  .example4 {
+    & .option {
+      display: flex;
+      cursor: pointer;
+    }
+
+    & .selected {
+      background-color: #EEE;
+    }
+
+    & .color {
+      width: 16px;
+      margin: 8px;
+      border-radius: 50%;
+    }
+
+    & .value {
+      padding: 8px 20px;
+    }
+  }
