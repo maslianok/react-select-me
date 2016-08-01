@@ -27,7 +27,7 @@ module.exports = require('./webpack.base.babel')({
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client',
-    path.join(process.cwd(), 'app/app.js'),
+    path.join(process.cwd(), 'src/demo/app.js'),
   ],
 
   // Don't use hashes in dev mode for better performance
@@ -135,7 +135,7 @@ function dependencyHandlers() {
  */
 function templateContent() {
   const html = fs.readFileSync(
-    path.resolve(process.cwd(), 'app/index.html')
+    path.resolve(process.cwd(), 'src/demo/index.html')
   ).toString();
 
   if (!dllPlugin) { return html; }

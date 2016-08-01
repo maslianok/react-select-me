@@ -1,10 +1,10 @@
 import React from 'react';
 import cs from 'classnames';
 
-import Select from '../../../src/ReactSelectMe';
+import Select from '../../../ReactSelectMe';
 
 import s from './styles.css';
-import selectStyles from '../../../src/ReactSelectMe.css';
+import selectStyles from '../../../ReactSelectMe.css';
 
 const colors = [
   { value: 1, label: 'Red', color: 'red' },
