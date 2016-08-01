@@ -179,16 +179,17 @@ export default class ReactSelectMe extends Component {
 
     const selectedBlockClasses = cs('dd__selected', s.dd__selected);
     const placeholderClasses = cs('dd__placeholder', s.dd__placeholder);
+    const noOptionsSelected = !selectedOptions.size && !selectedOptions.length;
 
     let selectedElements;
-    if ((selectedOptions.size || selectedOptions.length) && (multiple || !searchable || !opened)) {
+    if (!noOptionsSelected && (multiple || !searchable || !opened)) {
       selectedElements = selectedOptions.map(option => valueRenderer(option, this.onChange));
     }
 
     return (
       <div className={selectedBlockClasses}>
         {selectedElements}
-        {!selectedOptions.length && !searchable && <div className={placeholderClasses}>{placeholder}</div>}
+        {noOptionsSelected && !searchable && <div className={placeholderClasses}>{placeholder}</div>}
         {searchable && this.renderSearchInput()}
       </div>
     );
