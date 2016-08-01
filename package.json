@@ -1,15 +1,19 @@
 {
   "name": "react-select-me",
-  "version": "0.0.1",
   "description": "A highly scalable react dropdown list",
+  "version": "0.0.2",
+  "main": "lib/ReactSelectMe.js",
+  "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
     "type": "git",
     "url": "git://github.com/maslianok/react-select-me.git"
   },
+  "bugs": {
+    "url": "https://github.com/maslianok/react-select-me/issues"
+  },
   "engines": {
     "npm": ">=3"
   },
-  "author": "Vitalii Maslianok",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
