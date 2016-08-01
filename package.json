@@ -1,7 +1,7 @@
 {
   "name": "react-select-me",
   "description": "A highly scalable react dropdown list",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "lib/ReactSelectMe.js",
   "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
@@ -19,9 +19,6 @@
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
-    "npmcheckversion": "node ./internals/scripts/npmcheckversion.js",
-    "preinstall": "npm run npmcheckversion",
-    "postinstall": "npm run build:dll",
     "prebuild": "rimraf ./lib && npm run test",
     "build": "npm run build:js && npm run build:css",
     "build:js": "babel src --out-dir lib --ignore src/demo",
