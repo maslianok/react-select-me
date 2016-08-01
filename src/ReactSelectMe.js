@@ -603,6 +603,11 @@ export default class ReactSelectMe extends Component {
   getSelectedOptions() {
     const { value, valueKey, multiple } = this.props;
     const options = this.getOptions();
+
+    if (!options || (!options.length && !options.size)) {
+      return [];
+    }
+
     if (multiple) {
       if (value && (value.length || value.size)) {
         // options are objects
