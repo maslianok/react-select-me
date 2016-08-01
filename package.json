@@ -1,7 +1,7 @@
 {
   "name": "react-select-me",
   "description": "A highly scalable react dropdown list",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "lib/ReactSelectMe.js",
   "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
@@ -52,19 +52,7 @@
       "es2015",
       "react",
       "stage-0"
-    ],
-    "env": {
-      "production": {
-        "only": [
-          "src"
-        ],
-        "plugins": [
-          "transform-react-remove-prop-types",
-          "transform-react-constant-elements",
-          "transform-react-inline-elements"
-        ]
-      }
-    }
+    ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",

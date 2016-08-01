@@ -2,6 +2,7 @@ node_modules
 src
 internals
 server
+build
 
 .DS_Store
 *.log
