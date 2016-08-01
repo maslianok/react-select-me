@@ -272,7 +272,7 @@ export default class ReactSelectMe extends Component {
     }
 
     // no options
-    return [];
+    return this.toImmutable([]);
   }
 
   getSelectedOptions() {
@@ -280,7 +280,7 @@ export default class ReactSelectMe extends Component {
     const options = this.getOptions();
 
     if (!options || (!options.length && !options.size)) {
-      return [];
+      return this.toImmutable([]);
     }
 
     if (multiple) {
@@ -292,7 +292,7 @@ export default class ReactSelectMe extends Component {
         return value.map(v => options.find(option => this.getProp(option, valueKey) === v));
       }
 
-      return [];
+      return this.toImmutable([]);
     }
 
     const selectedOption = options.find(option => {
