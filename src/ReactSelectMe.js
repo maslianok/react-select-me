@@ -181,7 +181,7 @@ export default class ReactSelectMe extends Component {
     const placeholderClasses = cs('dd__placeholder', s.dd__placeholder);
 
     let selectedElements;
-    if (selectedOptions.length && (multiple || !searchable || !opened)) {
+    if ((selectedOptions.size || selectedOptions.length) && (multiple || !searchable || !opened)) {
       selectedElements = selectedOptions.map(option => valueRenderer(option, this.onChange));
     }
 
