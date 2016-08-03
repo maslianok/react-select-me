@@ -27,12 +27,8 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
 
 **Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
 
-====
-
 ##Installation
 `npm i react-select-me --save`
-
-====
 
 ##Usage
 ```javascript
@@ -62,7 +58,6 @@ export default class App extends React.Component {
 
 ##Examples
 ###Local
-
 1. Clone the repo
 `git clone git@github.com:maslianok/react-select-me.git`
 
@@ -79,8 +74,6 @@ export default class App extends React.Component {
 
 ###Live
 // TODO
-
-====
 
 ##Properties:
 ###options: Array
