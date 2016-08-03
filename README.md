@@ -1,34 +1,92 @@
 #react-select-me
 ===============================================
-##Props
-- Fast
-- Scalable
-- Debuggable
-- Universal
+##Advantages:
+- Highly scalable and extendable.
+You can customize any appearance or/and behaviour you want. We have a lot of useful renderers: [`listRenderer`](#listrenderer-function), [`optionRenderer`](#optionrenderer-function), [`selectedBlockRenderer`](#selectedblockrenderer-function), [`iconRenderer`](#iconrenderer-function) etc.
 
-##Features
-- custom renderers
-- CSS modules support
-- direction to open
-- isOpen support
-- immutable data support
-- virtualization
+- Immutable data structure support.
+Now you don't have to call `.toJS()` every time you render the element. Just pass the data as is and little unicorns do the rest of work for you!
 
+- Mutable data structure support.
+Just kidding :) Of course, you still can pass usual arrays as options.
+
+- Virtualization out of the box.
+Want to render 5k options. No problem, just add [`virtualized`](#virtualized-bool) property.
+
+- CSS modules.
+All of our classes are extendable with CSS modules. Take a look at [list of them](#s-object).
+
+- Direction to open
+We automatically detects direction to open. You can even tell us to calculate offsets based on any [wrapper](#getwrapper-function) you want. You can disable this functionality by changing [`direction`](#direction-string) property.
+
+- Server side rendering
+It wasn't hard at all.
+
+- Debuggable.
+Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm talking about, right?
+
+**Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
+
+##Installation
+`npm i react-select-me --save`
 
 ##Usage
+```javascript
+import Select from 'react-select-me';
+
+const options = [
+  { value: 1, label: 'Label 1' },
+  { value: 2, label: 'Label 2' },
+];
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: null };
+    this.onChange = this.onChange.bind(this);
+  }
+  onChange(value) {
+    this.setState({ value });
+  }
+  render() {
+    return (
+      <Select options={options} value={this.state.value} onChange={this.onChange} />
+    );
+  }
+}
+```
+
+##Examples
+###Local
+```
+// Clone the repo
+git clone git@github.com:maslianok/react-select-me.git && cd
+
+// Go to the directory
+cd react-select-me
+
+// Install dependencies
+npm i
+
+// Run demo app
+npm start
+
+// Open localhost:3000 in your browser
+```
+
+###Live
+// TODO
+
+===============================================
 
 ##Properties:
-===============================================
 ###options: Array
-
 Description: list of dropdown options
 Examples:
 - List of primitives: `[1, 2]`
 - List of objects: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
-===============================================
 ###value: Any
-
 Description: selected value
 Examples:
 - Primitive: `1`
@@ -36,9 +94,7 @@ Examples:
 - Array of primitives for multiselect: `[1, 2]`
 - Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
-===============================================
 ###onChange: Function
-
 Description: onChange callback. Return `false` to leave dropdown opened.
 Arguments:
 - `value: Array|Object|String|Number`: selected option (or array of options for multi select)
@@ -49,9 +105,7 @@ onChange(value) {
 }
 ```
 
-===============================================
 ###onSearch: Function
-
 Description: onSearch callback. Calls on every search input change.
 You have to process search string inside this function and filter your options based on your needs.
 Arguments:
@@ -63,23 +117,18 @@ onChange(value) {
 }
 ```
 
-===============================================
 ###multiple: Bool
 Description: multi-value dropdown
 
-===============================================
 ###searchable: Bool
 Description: ability to search (filter) options. `onSearch` function will be called
 
-===============================================
 ###isOpen: Bool
 Description: setting this property makes open / close functionality uncontrollable.
 It always opened when isOpen === true and always closed when isOpen === false.
 Setting this property to undefined returns component to usual behaviour.
 
-===============================================
 ###selectedValueRenderer: Function
-
 Description: function to render selected value
 Arguments:
 - `option: Object|String|Number`: option to render
@@ -91,9 +140,7 @@ selectedValueRenderer(option, onRemove) {
 }
 ```
 
-===============================================
 ###selectedBlockRenderer: Function
-
 Description: function to render block with selected options
 Arguments:
 - `selectedOptions: Array`: currently selected options
@@ -107,9 +154,7 @@ selectedBlockRenderer(selectedOptions, onRemove) {
 }
 ```
 
-===============================================
 ###optionRenderer: Function
-
 Description: function to render custom options
 Arguments:
 - `option: Object|String|Number`: option to render
@@ -121,9 +166,7 @@ optionRenderer(option, selectedOptions) {
 }
 ```
 
-===============================================
 ###listRenderer: Function
-
 Description: function to render the list
 Arguments:
 - `options: Array`: list of options
@@ -159,9 +202,7 @@ listRenderer(options, selectedOptions, optionRenderer, onChange, onToggle) {
 }
 ```
 
-===============================================
 ###iconRenderer: Function
-
 Description: function to render custom icon.
 Arguments:
 - `isOpened: Bool`: whether the list opened
@@ -173,62 +214,42 @@ iconRenderer(isOpened) {
 }
 ```
 
-===============================================
 ###beforeOpen: Function
-
 Description: before open handler. Return `false` to leave dropdown closed.
 Arguments:
 - `event: Object`: event
 
-===============================================
 ###beforeClose: Function
-
 Description: before close event. Return `false` to leave dropdown opened.
 
-===============================================
 ###onOpen: Function
-
 Description: handler for when the menu opens
 
-===============================================
 ###onClose: Function
-
 Description: handler for when the menu closes
 
-===============================================
 ###listMaxHeight: Number
-
 Description: Dropdown list max height in pixels. Default: `400`.
 
-===============================================
 ###listPosition: String
-
 Description: Dropdown list position. Default: `auto`.
 Available values:
 - `top`: expand to top
 - `bottom`: expand to bottom
 - `auto`: auto detection based on `wrapper` element
 
-===============================================
 ###getWrapper: Function
-
 Description: Function to get wrapper element.
 Commonly you have to set this parameter if any of component's parents has `overflow: hidden` property.
 This parameter affects to `listMaxHeight` and `listPosition` properties.
 
-===============================================
 ###boundaryMargin: Number
-
 Description: the minimal distance between screen / `wrapper` boundaries and dropdown list. Default: 6.
 
-===============================================
 ###searchable: Bool
-
 Description: ability to filter options
 
-===============================================
 ###s: Object
-
 Description: component classNames.
 List of supported classes:
 ```javascript
@@ -291,31 +312,24 @@ const classNames = {
 };
 <Select s={classNames} {...otherProps} />
 ```
-===============================================
-###virtualized: Bool
 
+###virtualized: Bool
 Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/).
 Huge time to render boost on large datasets.
 You have to set `optionHeight` property if your option height differs from default.
 
-===============================================
 ###optionHeight: Number | Function
-
 Default: 40
 Description: option height. This property has to be set for virtualized lists,
 because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types)
 has to know total options height to correctly display scroll.
 It also used to calculate direction to open the list (in case of `direction="auto"`).
 
-===============================================
 ###listHeight: Number
-
 Description: when you set this property the list will always have the constant height despite
 options length and available space. You have to set this property only when you are creating something like
 horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.
 
-===============================================
 ###immutable: Bool
-
 Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists.
 When this property set to `true` you have to provide `options` and `value` as immutable objects.
