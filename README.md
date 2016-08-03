@@ -1,5 +1,5 @@
 #react-select-me
-===============================================
+
 ##Advantages:
 - Highly scalable and extendable.
 You can customize any appearance or/and behaviour you want. We have a lot of useful renderers: [`listRenderer`](#listrenderer-function), [`optionRenderer`](#optionrenderer-function), [`selectedBlockRenderer`](#selectedblockrenderer-function), [`iconRenderer`](#iconrenderer-function) etc.
@@ -27,8 +27,12 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
 
 **Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
 
+====
+
 ##Installation
 `npm i react-select-me --save`
+
+====
 
 ##Usage
 ```javascript
@@ -58,26 +62,25 @@ export default class App extends React.Component {
 
 ##Examples
 ###Local
-```
-// Clone the repo
-git clone git@github.com:maslianok/react-select-me.git && cd
 
-// Go to the directory
-cd react-select-me
+1. Clone the repo
+`git clone git@github.com:maslianok/react-select-me.git`
 
-// Install dependencies
-npm i
+2. Go to the directory
+`cd react-select-me`
 
-// Run demo app
-npm start
+3. Install dependencies
+`npm i`
 
-// Open localhost:3000 in your browser
-```
+4. Run demo app
+`npm start`
+
+5. Open `localhost:3000` in your browser
 
 ###Live
 // TODO
 
-===============================================
+====
 
 ##Properties:
 ###options: Array
@@ -93,6 +96,21 @@ Examples:
 - Object: `{value: 1, label: 'Label 1'}`
 - Array of primitives for multiselect: `[1, 2]`
 - Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
+
+###multiple: Bool
+Description: multi-value dropdown
+
+###searchable: Bool
+Description: ability to search (filter) options. `onSearch` function will be called
+
+###virtualized: Bool
+Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/).
+Huge time to render boost on large datasets.
+You have to set `optionHeight` property if your option height differs from default.
+
+###immutable: Bool
+Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists.
+When this property set to `true` you have to provide `options` and `value` as immutable objects.
 
 ###onChange: Function
 Description: onChange callback. Return `false` to leave dropdown opened.
@@ -117,16 +135,10 @@ onChange(value) {
 }
 ```
 
-###multiple: Bool
-Description: multi-value dropdown
-
-###searchable: Bool
-Description: ability to search (filter) options. `onSearch` function will be called
-
 ###isOpen: Bool
 Description: setting this property makes open / close functionality uncontrollable.
 It always opened when isOpen === true and always closed when isOpen === false.
-Setting this property to undefined returns component to usual behaviour.
+Setting this property to `undefined` returns component to the usual behaviour.
 
 ###selectedValueRenderer: Function
 Description: function to render selected value
@@ -231,6 +243,18 @@ Description: handler for when the menu closes
 ###listMaxHeight: Number
 Description: Dropdown list max height in pixels. Default: `400`.
 
+###listHeight: Number
+Description: when you set this property the list will always have the constant height despite
+options length and available space. You have to set this property only when you are creating something like
+horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.
+
+###optionHeight: Number | Function
+Default: 40
+Description: option height. This property has to be set for virtualized lists,
+because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types)
+has to know total options height to correctly display scroll.
+It also used to calculate direction to open the list (in case of `direction="auto"`).
+
 ###listPosition: String
 Description: Dropdown list position. Default: `auto`.
 Available values:
@@ -245,9 +269,6 @@ This parameter affects to `listMaxHeight` and `listPosition` properties.
 
 ###boundaryMargin: Number
 Description: the minimal distance between screen / `wrapper` boundaries and dropdown list. Default: 6.
-
-###searchable: Bool
-Description: ability to filter options
 
 ###s: Object
 Description: component classNames.
@@ -297,7 +318,7 @@ Examples:
 1. If you are using css modules you can import default styles directly to the component:
 ```javascript
 import Select from 'react-select-me';
-import s from 'react-select-me/styles.scss';
+import s from 'react-select-me/src/ReactSelectMe.css';
 ...
 <Select s={s} {...otherProps} />
 ```
@@ -312,24 +333,3 @@ const classNames = {
 };
 <Select s={classNames} {...otherProps} />
 ```
-
-###virtualized: Bool
-Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/).
-Huge time to render boost on large datasets.
-You have to set `optionHeight` property if your option height differs from default.
-
-###optionHeight: Number | Function
-Default: 40
-Description: option height. This property has to be set for virtualized lists,
-because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types)
-has to know total options height to correctly display scroll.
-It also used to calculate direction to open the list (in case of `direction="auto"`).
-
-###listHeight: Number
-Description: when you set this property the list will always have the constant height despite
-options length and available space. You have to set this property only when you are creating something like
-horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.
-
-###immutable: Bool
-Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists.
-When this property set to `true` you have to provide `options` and `value` as immutable objects.
