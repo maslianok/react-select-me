@@ -59,15 +59,19 @@ export default class App extends React.Component {
 ##Examples
 ###Local
 1. Clone the repo
+
 `git clone git@github.com:maslianok/react-select-me.git`
 
 2. Go to the directory
+
 `cd react-select-me`
 
 3. Install dependencies
+
 `npm i`
 
 4. Run demo app
+
 `npm start`
 
 5. Open `localhost:3000` in your browser
@@ -94,7 +98,7 @@ Examples:
 Description: multi-value dropdown
 
 ###searchable: Bool
-Description: ability to search (filter) options. `onSearch` function will be called
+Description: ability to search / filter options. [`onSearch`](#onSearch-function) function will be called
 
 ###virtualized: Bool
 Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/).
@@ -123,8 +127,32 @@ Arguments:
 - `search: String`: search string
 Example:
 ```javascript
-onChange(value) {
-  // handle new value
+const options = [
+  { value: 1, label: 'Label 1' },
+  { value: 2, label: 'Label 2' },
+];
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { options };
+    this.onSearch = this.onSearch.bind(this);
+  }
+  onSearch(searchString) {
+    this.setState({
+      options: options.filter(o => o.label.indexOf(searchString) > -1)
+    });
+  }
+  render() {
+    return (
+      <Select
+        searchable
+        options={this.state.options}
+        onSearch={this.onSearch}
+        ...
+      />
+    );
+  }
 }
 ```
 

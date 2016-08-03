@@ -12,6 +12,7 @@ export default class ReactSelectMe extends Component {
 
     this.state = {
       opened: props.isOpened === undefined ? false : props.isOpened,
+      search: '',
     };
 
     this.ssr = typeof window === 'undefined';
@@ -197,7 +198,7 @@ export default class ReactSelectMe extends Component {
 
   renderSearchInput() {
     const { placeholder, s, searchInputRenderer } = this.props;
-    const { searchString } = this.state;
+    const { search } = this.state;
     const selectedOptions = this.getSelectedOptions();
     const className = cs('dd__search', s.dd__search);
 
@@ -215,10 +216,9 @@ export default class ReactSelectMe extends Component {
         onFocus={this.onSearch}
         onClick={this.onSearch}
         placeholder={selectedOptions.length || selectedOptions.size ? '' : placeholder}
+        dangerouslySetInnerHTML={{ __html: search }}
         ref={e => (this.searchInput = e)}
-      >
-        {searchString}
-      </div>
+      />
     );
   }
 
@@ -473,12 +473,15 @@ export default class ReactSelectMe extends Component {
           break;
         case 'input':
           // call filter function onInput
-          const { onSearch } = this.props;
           const search = this.searchInput.innerHTML;
-          if (onSearch && search !== this.lastSearch) {
-            onSearch(search);
+          if (search !== this.state.search) {
+            this.setState({ search });
+
+            const { onSearch } = this.props;
+            if (typeof onSearch === 'function') {
+              onSearch(search);
+            }
           }
-          this.lastSearch = search;
           break;
         default:
           break;

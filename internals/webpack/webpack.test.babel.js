@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+
 const modules = [
   'src/demo',
   'node_modules',
