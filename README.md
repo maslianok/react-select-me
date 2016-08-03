@@ -59,19 +59,15 @@ export default class App extends React.Component {
 ##Examples
 ###Local
 1. Clone the repo
-
 `git clone git@github.com:maslianok/react-select-me.git`
 
 2. Go to the directory
-
 `cd react-select-me`
 
 3. Install dependencies
-
 `npm i`
 
 4. Run demo app
-
 `npm start`
 
 5. Open `localhost:3000` in your browser
