@@ -101,3 +101,20 @@
           border-color: #4CAE4C;
         }
   }
+
+  .example8 {
+    & .wrapper {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+      & .value {
+        margin-right: 5px;
+      }
+
+      & .counter {
+        font-style: italic;
+        color: #22D3B1;
+      }
+  }

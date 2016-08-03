@@ -110,6 +110,20 @@ export default class App extends React.Component {
     );
   }
 
+  selectedBlockRenderer8(selectedOptions) {
+    if (!selectedOptions.length) {
+      return <div className={s.wrapper}>Select an option</div>;
+    }
+
+    const [firstOption, ...otherOptions] = selectedOptions;
+    return (
+      <div className={s.wrapper}>
+        <div className={s.value}>{firstOption.label}</div>
+        {!!otherOptions.length && <div className={s.counter}>+{otherOptions.length}</div>}
+      </div>
+    );
+  }
+
   render() {
     const { values } = this.state;
     return (
@@ -207,6 +221,20 @@ export default class App extends React.Component {
               s={selectStyles}
               onChange={this.onChange(7, true)}
               listRenderer={this.listRenderer7}
+            />
+          </div>
+        </div>
+
+        <div className={`${s.example} ${s.example8}`}>
+          <h3 className={s.h3}>Custom selected block renderer.</h3>
+          <div className={s.selectWrapper}>
+            <Select
+              multiple
+              options={colors}
+              value={values[8]}
+              s={selectStyles}
+              onChange={this.onChange(8, true)}
+              selectedBlockRenderer={this.selectedBlockRenderer8}
             />
           </div>
         </div>
