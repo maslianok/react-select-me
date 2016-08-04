@@ -313,7 +313,7 @@ export default class ReactSelectMe extends Component {
 
     return multiple ?
       value.map(v => this.patchSelectedOption(v, options)) :
-      this.patchSelectedOption(value, options);
+      this.toImmutable([this.patchSelectedOption(value, options)]);
   }
 
   getListProps() {
