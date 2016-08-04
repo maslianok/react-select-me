@@ -55,7 +55,9 @@ export default class App extends React.Component {
   onSearch4(searchString) {
     const lowerString = searchString.toLowerCase();
     this.setState({
-      options4: colors.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1),
+      options4: searchString ?
+        colors.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1) :
+        colors,
     });
   }
 

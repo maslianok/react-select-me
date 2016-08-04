@@ -6,6 +6,7 @@
   --color-shark: #2D3136;
   --color-black: #000;
   --color-seashell: #F1F1F1;
+  --line-height: 20px;
 }
 
 .dd__wrapper {
@@ -37,7 +38,7 @@
 		display: flex;
 		align-items: center;
 		padding: 8px;
-		line-height: 20px;
+		line-height: var(--line-height);
 		cursor: pointer;
 		overflow: hidden;
 
@@ -62,20 +63,20 @@
 		}
 
 			.dd__search {
-				display: flex;
+				display: inline-block;
 				align-items: center;
 				flex-grow: 1;
 				border: 1px solid transparent;
 				outline: 0;
-
-				&:empty::before {
-					content: attr(placeholder);
-					display: block;
-					color: var(--color-pale-sky);
-				}
+        opacity: 0;
+        min-height: var(--line-height);
 
 				@nest .dd__multi & {
 					margin-top: 2px;
+				}
+
+        @nest .dd__opened & {
+					opacity: 1;
 				}
 			}
 

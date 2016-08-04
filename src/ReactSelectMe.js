@@ -214,18 +214,23 @@ export default class ReactSelectMe extends Component {
       selectedElements = selectedOptions.map(option => valueRenderer(option, this.onChange));
     }
 
+    if (multiple && !opened) {
+      // render
+    } else {
+      // render
+    }
+
     return (
       <div className={selectedBlockClasses}>
         {selectedElements}
-        {noOptionsSelected && !searchable && <div className={placeholderClasses}>{placeholder}</div>}
+        {noOptionsSelected && (!multiple || !opened) && <div className={placeholderClasses}>{placeholder}</div>}
         {searchable && this.renderSearchInput()}
       </div>
     );
   }
 
   renderSearchInput() {
-    const { placeholder, s, searchInputRenderer } = this.props;
-    const { search, opened } = this.state;
+    const { s, searchInputRenderer } = this.props;
     const selectedOptions = this.getSelectedOptions();
     const className = cs('dd__search', s.dd__search);
 
@@ -242,8 +247,6 @@ export default class ReactSelectMe extends Component {
         onKeyDown={this.onSearch}
         onFocus={this.onSearch}
         onClick={this.onSearch}
-        placeholder={selectedOptions.length || selectedOptions.size ? '' : placeholder}
-        dangerouslySetInnerHTML={{ __html: opened ? search : '' }}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -485,8 +488,8 @@ export default class ReactSelectMe extends Component {
           break;
         case 'input':
           // call filter function onInput
-          const search = this.searchInput.innerHTML;
-          if (search !== this.state.search) {
+          const search = (this.searchInput.textContent || this.searchInput.innerText || '').replace(/\n/g, '');
+          if (search !== this.prevSearch) {
             this.setState({ search });
 
             const { onSearch } = this.props;
@@ -494,6 +497,7 @@ export default class ReactSelectMe extends Component {
               onSearch(search);
             }
           }
+          this.prevSearch = search;
           break;
         default:
           break;
@@ -516,6 +520,10 @@ export default class ReactSelectMe extends Component {
       this.setState({
         search: '',
       });
+
+      if (this.searchInput) {
+        this.searchInput.innerHTML = '';
+      }
 
       if (typeof onSearch === 'function') {
         onSearch('');
