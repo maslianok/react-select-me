@@ -232,13 +232,13 @@ Arguments:
 - `onToggleList: Function`: toggle list visibility
 
 Example:
-1. Simple
+- Simple
 ```javascript
 listRenderer(options, selectedOptions, optionRenderer) {
   return <ul>{options.map(option => optionRenderer(option, selectedOptions))}</ul>;
 }
 ```
-2. Advanced
+- Advanced
 ```javascript
 listRenderer(options, selectedOptions, optionRenderer, onChange, onToggle) {
   return (
