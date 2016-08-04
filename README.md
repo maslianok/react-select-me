@@ -1,28 +1,36 @@
 #react-select-me
 
 ##Advantages:
-- Highly scalable and extendable.
+- **Highly scalable and extendable**
+
 You can customize any appearance or/and behaviour you want. We have a lot of useful renderers: [`listRenderer`](#listrenderer-function), [`optionRenderer`](#optionrenderer-function), [`selectedBlockRenderer`](#selectedblockrenderer-function), [`iconRenderer`](#iconrenderer-function) etc.
 
-- Immutable data structure support.
+- **Immutable data structure support**
+
 Now you don't have to call `.toJS()` every time you render the element. Just pass the data as is and little unicorns do the rest of work for you!
 
-- Mutable data structure support.
+- **Mutable data structure support**
+
 Just kidding :) Of course, you still can pass usual arrays as options.
 
-- Virtualization out of the box.
+- **Virtualization out of the box**
+
 Want to render 5k options. No problem, just add [`virtualized`](#virtualized-bool) property.
 
-- CSS modules.
+- **CSS modules**
+
 All of our classes are extendable with CSS modules. Take a look at [list of them](#s-object).
 
-- Direction to open
+- **Direction to open**
+
 We automatically detect direction to open. You can even tell us to calculate offsets based on any [wrapper](#getwrapper-function) you want. You can disable this functionality by changing [`direction`](#direction-string) property.
 
-- Server side rendering
+- **Server side rendering**
+
 It wasn't hard at all.
 
-- Debuggable.
+- **Debuggable**
+
 Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm talking about, right?
 
 **Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
