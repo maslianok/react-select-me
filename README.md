@@ -78,13 +78,15 @@ http://maslianok.github.io/react-select-me/
 
 ##Properties:
 ###options: Array
-Description: list of dropdown options
+*Description: list of dropdown options*
+
 Examples:
 - List of primitives: `[1, 2]`
 - List of objects: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
 ###value: Any
-Description: selected value
+*Description: selected value / values*
+
 Examples:
 - Primitive: `1`
 - Object: `{value: 1, label: 'Label 1'}`
@@ -92,24 +94,27 @@ Examples:
 - Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
 ###multiple: Bool
-Description: multi-value dropdown
+*Description: multi-value dropdown*
+
+Default: `false`
 
 ###searchable: Bool
-Description: ability to search / filter options. [`onSearch`](#onSearch-function) function will be called
+*Description: ability to search / filter options. [`onSearch`](#onSearch-function) function will be called*
+
+Default: `false`
 
 ###virtualized: Bool
-Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/).
-Huge time to render boost on large datasets.
-You have to set `optionHeight` property if your option height differs from default.
+*Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/). Huge time to render boost on large datasets. You have to set [`optionHeight`](#optionheight-number--function) property if your option height differs from default.*
 
 ###immutable: Bool
-Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists.
-When this property set to `true` you have to provide `options` and `value` as immutable objects.
+*Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists. When this property set to `true` you have to provide [`options`](#options-array) and [`value`](#value-any) as immutable objects.*
 
 ###onChange: Function
-Description: onChange callback. Return `false` to leave dropdown opened.
+*Description: onChange callback. Return `false` to leave dropdown opened.*
+
 Arguments:
 - `value: Array|Object|String|Number`: selected option (or array of options for multi select)
+
 Example:
 ```javascript
 onChange(value) {
@@ -118,10 +123,11 @@ onChange(value) {
 ```
 
 ###onSearch: Function
-Description: onSearch callback. Calls on every search input change.
-You have to process search string inside this function and filter your options based on your needs.
+*Description: onSearch callback. Calls on every search input change. You have to process search string inside this function and filter your options based on your needs.*
+
 Arguments:
 - `search: String`: search string
+
 Example:
 ```javascript
 const options = [
@@ -154,10 +160,12 @@ export default class App extends React.Component {
 ```
 
 ###selectedValueRenderer: Function
-Description: function to render selected value
+*Description: function to render selected value*
+
 Arguments:
 - `option: Object|String|Number`: option to render
 - `onRemove: Function`: default function to remove value
+
 Example:
 ```javascript
 selectedValueRenderer(option, onRemove) {
@@ -166,12 +174,14 @@ selectedValueRenderer(option, onRemove) {
 ```
 
 ###selectedBlockRenderer: Function
-Description: function to render block with selected options
+*Description: function to render block with selected options*
+
 Arguments:
 - `selectedOptions: Array`: currently selected options
 - `onRemove: Function`: default function to remove value
 - `selectedValueRenderer: Function`: default function to render selected value
 - `searchInputRenderer: Function`: default function to render search block
+
 Example:
 ```javascript
 selectedBlockRenderer(selectedOptions, onRemove) {
@@ -180,10 +190,12 @@ selectedBlockRenderer(selectedOptions, onRemove) {
 ```
 
 ###optionRenderer: Function
-Description: function to render custom options
+*Description: function to render custom options*
+
 Arguments:
 - `option: Object|String|Number`: option to render
 - `selectedOptions: Array`: currently selected options
+
 Example:
 ```javascript
 optionRenderer(option, selectedOptions) {
@@ -192,13 +204,15 @@ optionRenderer(option, selectedOptions) {
 ```
 
 ###listRenderer: Function
-Description: function to render the list
+*Description: function to render the list*
+
 Arguments:
 - `options: Array`: list of options
 - `selectedOptions: Array`: currently selected options
 - `optionRenderer: Function`: default option renderer
 - `onChange: Function`: default onChange callback
 - `onToggleList: Function`: toggle list visibility
+
 Example:
 1. Simple
 ```javascript
@@ -228,7 +242,8 @@ listRenderer(options, selectedOptions, optionRenderer, onChange, onToggle) {
 ```
 
 ###iconRenderer: Function
-Description: function to render custom icon.
+*Description: function to render custom icon.*
+
 Arguments:
 - `isOpened: Bool`: whether the list opened
 
@@ -240,60 +255,59 @@ iconRenderer(isOpened) {
 ```
 
 ###isOpen: Bool
-Description: setting this property makes open / close functionality uncontrollable.
-It always opened when isOpen === true and always closed when isOpen === false.
-Setting this property to `undefined` returns component to the usual behaviour.
+*Description: setting this property makes open / close functionality uncontrollable. It always opened when isOpen === true and always closed when isOpen === false. Setting this property to `undefined` returns component to the usual behaviour.*
 
 ###beforeOpen: Function
-Description: before open handler. Return `false` to leave dropdown closed.
+*Description: before open handler. Return `false` to leave dropdown closed.*
+
 Arguments:
 - `event: Object`: event
 
 ###beforeClose: Function
-Description: before close event. Return `false` to leave dropdown opened.
+*Description: before close event. Return `false` to leave dropdown opened.*
 
 ###onOpen: Function
-Description: handler for when the menu opens
+*Description: handler for when the menu opens*
 
 ###onClose: Function
-Description: handler for when the menu closes
+*Description: handler for when the menu closes*
 
 ###clearFilterOnClose: Bool
-Description: whether to clear input on close or not
+*Description: whether to clear input on close or not*
+
 Default: `true`
 
 ###listMaxHeight: Number
-Description: Dropdown list max height in pixels. Default: `400`.
+*Description: Dropdown list max height in pixels.*
+
+Default: `400`.
 
 ###listHeight: Number
-Description: when you set this property the list will always have the constant height despite
-options length and available space. You have to set this property only when you are creating something like
-horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.
+*Description: when you set this property the list will always have the constant height despite options length and available space. You have to set this property only when you are creating something like horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.*
 
 ###optionHeight: Number | Function
 Default: 40
-Description: option height. This property has to be set for virtualized lists,
-because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types)
-has to know total options height to correctly display scroll.
-It also used to calculate direction to open the list (in case of `direction="auto"`).
+*Description: option height. This property has to be set for virtualized lists, because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types) has to know total options height to correctly display scroll. It also used to calculate direction to open the list (in case of `direction="auto"`).*
 
 ###listPosition: String
-Description: Dropdown list position. Default: `auto`.
+*Description: Dropdown list position. Default: `auto`.*
+
 Available values:
 - `top`: expand to top
 - `bottom`: expand to bottom
 - `auto`: auto detection based on `wrapper` element
 
 ###getWrapper: Function
-Description: Function to get wrapper element.
-Commonly you have to set this parameter if any of component's parents has `overflow: hidden` property.
-This parameter affects to `listMaxHeight` and `listPosition` properties.
+*Description: Function to get wrapper element. Commonly you have to set this parameter if any of component's parents has `overflow: hidden` property. This parameter affects to `listMaxHeight` and `listPosition` properties.*
 
 ###boundaryMargin: Number
-Description: the minimal distance between screen / `wrapper` boundaries and dropdown list. Default: 6.
+*Description: the minimal distance between screen / `wrapper` boundaries and dropdown list.*
+
+Default: 6.
 
 ###s: Object
-Description: component classNames.
+*Description: component classNames.*
+
 List of supported classes:
 ```javascript
 {
