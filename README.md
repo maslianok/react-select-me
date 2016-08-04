@@ -57,6 +57,9 @@ export default class App extends React.Component {
 ```
 
 ##Examples
+###Live
+http://maslianok.github.io/react-select-me/
+
 ###Local
 1. Clone the repo
 `git clone git@github.com:maslianok/react-select-me.git`
@@ -72,8 +75,6 @@ export default class App extends React.Component {
 
 5. Open `localhost:3000` in your browser
 
-###Live
-// TODO
 
 ##Properties:
 ###options: Array
