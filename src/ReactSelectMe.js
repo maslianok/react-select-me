@@ -1,3 +1,7 @@
+// @TODO
+// hot keys: select option on Enter, remove on Backspcae, highlight etc
+// disable option
+
 import React, { Component, PropTypes as T } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import { VirtualScroll, AutoSizer } from 'react-virtualized';
@@ -20,6 +24,7 @@ export default class ReactSelectMe extends Component {
     this.closeGlobal = this.closeGlobal.bind(this);
     this.skipEventPropagation = this.skipEventPropagation.bind(this);
     this.toImmutable = this.toImmutable.bind(this);
+    this.patchSelectedOption = this.patchSelectedOption.bind(this);
     this.getOptions = this.getOptions.bind(this);
     this.getOptionHeight = this.getOptionHeight.bind(this);
     this.getSelectedOptions = this.getSelectedOptions.bind(this);
@@ -35,9 +40,11 @@ export default class ReactSelectMe extends Component {
     this.onRemoveSelected = this.onRemoveSelected.bind(this);
     this.onToggle = this.onToggle.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onOpen = this.onOpen.bind(this);
+    this.onClose = this.onClose.bind(this);
 
     if (props.value && props.multiple && !Array.isArray(props.value)) {
-      this.warn('Invalid prop `value` supplied to `SelectComponent`, expected `array`.');
+      this.warn('Invalid prop `value` supplied to `react-select-me`, expected `array`.');
     }
   }
 
@@ -74,7 +81,7 @@ export default class ReactSelectMe extends Component {
   }
 
   closeGlobal(e) {
-    const { isOpened, beforeClose, onClose } = this.props;
+    const { isOpened, beforeClose } = this.props;
     // @maslianok: when you decide to change this, please, keep in mind, that this case should work:
     // Open A -> Open B -> A should be closed
     if (this.skipPropagation || !this.state.opened) {
@@ -83,7 +90,7 @@ export default class ReactSelectMe extends Component {
     }
 
     if (!isOpened && beforeClose(e) !== false) {
-      this.setState({ opened: false }, onClose);
+      this.setState({ opened: false }, this.onClose);
     }
   }
 
@@ -94,6 +101,26 @@ export default class ReactSelectMe extends Component {
   toImmutable(data) {
     const { immutable } = this.props;
     return immutable ? fromJS(data) : data;
+  }
+
+  patchSelectedOption(selectedOption, options) {
+    const { valueKey, labelKey } = this.props;
+    // if object
+    if (typeof selectedOption === 'object') {
+      // just return this value
+      return selectedOption;
+    }
+
+    // if primitive (Number or String)
+
+    // search for this option in `options` array
+    const option = options.find(o => this.getProp(o, valueKey) === selectedOption);
+    if (option) {
+      return option;
+    }
+
+    // if not found - map it to object
+    return this.toImmutable({ [valueKey]: selectedOption, [labelKey]: selectedOption });
   }
   /* ***************************************
   ************** Renderers *****************
@@ -198,12 +225,12 @@ export default class ReactSelectMe extends Component {
 
   renderSearchInput() {
     const { placeholder, s, searchInputRenderer } = this.props;
-    const { search } = this.state;
+    const { search, opened } = this.state;
     const selectedOptions = this.getSelectedOptions();
     const className = cs('dd__search', s.dd__search);
 
     if (typeof searchInputRenderer === 'function') {
-      return searchInputRenderer(selectedOptions);
+      return searchInputRenderer(selectedOptions, this.onSearch);
     }
 
     return (
@@ -216,7 +243,7 @@ export default class ReactSelectMe extends Component {
         onFocus={this.onSearch}
         onClick={this.onSearch}
         placeholder={selectedOptions.length || selectedOptions.size ? '' : placeholder}
-        dangerouslySetInnerHTML={{ __html: search }}
+        dangerouslySetInnerHTML={{ __html: opened ? search : '' }}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -277,31 +304,16 @@ export default class ReactSelectMe extends Component {
   }
 
   getSelectedOptions() {
-    const { value, valueKey, multiple } = this.props;
+    const { value, multiple } = this.props;
     const options = this.getOptions();
 
-    if (!options || (!options.length && !options.size)) {
+    if (!value || (multiple && !value.length && !value.size)) {
       return this.toImmutable([]);
     }
 
-    if (multiple) {
-      if (value && (value.length || value.size)) {
-        // options are objects
-        if (typeof this.getProp(value, 0) === 'object') {
-          return value;
-        }
-        return value.map(v => options.find(option => this.getProp(option, valueKey) === v));
-      }
-
-      return this.toImmutable([]);
-    }
-
-    const selectedOption = options.find(option => {
-      const key = typeof value === 'object' ? this.getProp(value, valueKey) : value;
-      return this.getProp(option, valueKey) === key;
-    });
-
-    return this.toImmutable(selectedOption ? [selectedOption] : []);
+    return multiple ?
+      value.map(v => this.patchSelectedOption(v, options)) :
+      this.patchSelectedOption(value, options);
   }
 
   getListProps() {
@@ -420,7 +432,7 @@ export default class ReactSelectMe extends Component {
     }
 
     const {
-      props: { searchable, beforeOpen, beforeClose, isOpened, onOpen, onClose },
+      props: { searchable, beforeOpen, beforeClose, isOpened },
       state: { opened },
     } = this;
 
@@ -428,7 +440,7 @@ export default class ReactSelectMe extends Component {
     const beforeFunc = nextState ? beforeOpen : beforeClose;
 
     if (nextState !== opened && beforeFunc(e) !== false) {
-      const afterFunc = nextState ? onOpen : onClose;
+      const afterFunc = nextState ? this.onOpen : this.onClose;
       this.skipEventPropagation();
       if (searchable && this.searchInput) {
         if (nextState) {
@@ -488,6 +500,32 @@ export default class ReactSelectMe extends Component {
       }
     }
   }
+
+  onOpen() {
+    const { onOpen } = this.props;
+    if (typeof onOpen === 'function') {
+      onOpen();
+    }
+  }
+
+  onClose() {
+    const { onClose, clearFilterOnClose, onSearch } = this.props;
+    const { search } = this.state;
+
+    if (clearFilterOnClose && search) {
+      this.setState({
+        search: '',
+      });
+
+      if (typeof onSearch === 'function') {
+        onSearch('');
+      }
+    }
+
+    if (typeof onClose === 'function') {
+      onClose();
+    }
+  }
   /* ***************************************
   **************** Render ******************
   *****************************************/
@@ -522,21 +560,22 @@ export default class ReactSelectMe extends Component {
 }
 
 ReactSelectMe.defaultProps = {
-  optionHeight: 40,
+  beforeClose: () => true,
+  beforeOpen: () => true,
   boundaryMargin: 8,
+  clearFilterOnClose: true,
+  getWrapper: () => null,
+  onClose: () => null,
+  onChange: () => null,
+  onOpen: () => null,
+  optionHeight: 40,
+  options: [],
+  labelKey: 'label',
   listMaxHeight: 400,
   listPosition: 'auto',
-  labelKey: 'label',
-  valueKey: 'value',
   placeholder: 'Select ...',
-  options: [],
+  valueKey: 'value',
   s: {},
-  onChange: () => null,
-  beforeOpen: () => true,
-  beforeClose: () => true,
-  onOpen: () => null,
-  onClose: () => null,
-  getWrapper: () => null,
 };
 
 const classType = T.oneOfType([T.string, T.array]);
@@ -544,6 +583,7 @@ ReactSelectMe.propTypes = {
   beforeClose: T.func,
   beforeOpen: T.func,
   boundaryMargin: T.number,
+  clearFilterOnClose: T.bool,
   disabled: T.bool,
   error: T.bool,
   getWrapper: T.func,

@@ -152,11 +152,6 @@ export default class App extends React.Component {
 }
 ```
 
-###isOpen: Bool
-Description: setting this property makes open / close functionality uncontrollable.
-It always opened when isOpen === true and always closed when isOpen === false.
-Setting this property to `undefined` returns component to the usual behaviour.
-
 ###selectedValueRenderer: Function
 Description: function to render selected value
 Arguments:
@@ -243,6 +238,11 @@ iconRenderer(isOpened) {
 }
 ```
 
+###isOpen: Bool
+Description: setting this property makes open / close functionality uncontrollable.
+It always opened when isOpen === true and always closed when isOpen === false.
+Setting this property to `undefined` returns component to the usual behaviour.
+
 ###beforeOpen: Function
 Description: before open handler. Return `false` to leave dropdown closed.
 Arguments:
@@ -256,6 +256,10 @@ Description: handler for when the menu opens
 
 ###onClose: Function
 Description: handler for when the menu closes
+
+###clearFilterOnClose: Bool
+Description: whether to clear input on close or not
+Default: `true`
 
 ###listMaxHeight: Number
 Description: Dropdown list max height in pixels. Default: `400`.
