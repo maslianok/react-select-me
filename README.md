@@ -285,8 +285,8 @@ iconRenderer(isOpened) {
 }
 ```
 
-###isOpen: Bool
-*Description: setting this property makes open / close functionality uncontrollable. It always opened when isOpen === true and always closed when isOpen === false. Setting this property to `undefined` returns component to the usual behaviour.*
+###isOpened: Bool
+*Description: setting this property makes open / close functionality uncontrollable. It always opened when `isOpened === true` and always closed when `isOpened === false`. Setting this property to `undefined` returns component to the usual behaviour.*
 
 Default: `undefined`
 

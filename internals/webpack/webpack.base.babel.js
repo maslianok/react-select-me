@@ -18,8 +18,12 @@ module.exports = (options) => ({
       query: options.babelQuery,
     }, {
       test: /\.css$/,
-      exclude: /node_modules/,
+      include: /src/,
       loader: options.cssLoaders,
+    }, {
+      test: /\.css$/,
+      include: /lib/,
+      loader: 'style-loader!css-loader',
     }],
   },
   plugins: options.plugins.concat([

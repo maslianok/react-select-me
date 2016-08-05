@@ -214,12 +214,6 @@ export default class ReactSelectMe extends Component {
       selectedElements = selectedOptions.map(option => valueRenderer(option, this.onChange));
     }
 
-    if (multiple && !opened) {
-      // render
-    } else {
-      // render
-    }
-
     return (
       <div className={selectedBlockClasses}>
         {selectedElements}
