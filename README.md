@@ -42,6 +42,9 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
 ```javascript
 import Select from 'react-select-me';
 
+// IMPORTANT If you want to provide default styles you have to import them
+import 'react-select-me/lib/ReactSelectMe.css';
+
 const options = [
   { value: 1, label: 'Label 1' },
   { value: 2, label: 'Label 2' },
