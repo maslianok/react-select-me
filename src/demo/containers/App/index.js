@@ -238,10 +238,11 @@ export default class App extends React.Component {
 
   onSearch(searchString) {
     const lowerString = searchString.toLowerCase();
+    const currOptions = this.state.virtualized ? tonsOfOptions : options;
     this.setState({
       options: searchString ?
-        options.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1) :
-        options,
+        currOptions.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1) :
+        currOptions,
     });
   }
 
