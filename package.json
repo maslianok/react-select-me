@@ -1,7 +1,7 @@
 {
   "name": "react-select-me",
   "description": "A highly scalable react dropdown list",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "main": "lib/ReactSelectMe.js",
   "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
@@ -73,7 +73,10 @@
       "react/jsx-sort-props": 0,
       "react/sort-comp": 0,
       "no-case-declarations": 0,
-      "max-len": [2, 120]
+      "max-len": [
+        2,
+        120
+      ]
     },
     "settings": {
       "import/resolver": {
