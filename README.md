@@ -182,6 +182,14 @@ export default class App extends React.Component {
 }
 ```
 
+###onAddNewItem: Bool
+*Description: callback to handle click on the 'Add new item' option*
+
+Default: `undefined`
+
+Arguments:
+- `search: String`: search string
+
 ###selectedValueRenderer: Function
 *Description: function to render selected value*
 
@@ -285,6 +293,30 @@ iconRenderer(isOpened) {
 }
 ```
 
+###noItemsFound: Bool | String | Function
+*Description: Bool: whether to display 'No items found' option or not. String: 'No items found' label. Function: 'No items found' renderer*
+
+Default: `true`
+
+Example:
+```javascript
+noItemsFound() {
+  return <div className="my-awesome-class">No items found</div>;
+}
+```
+
+###addNewItem: Bool | String | Function
+*Description: Bool: whether to display 'Add new item' option or not. String: 'Add new item' label. Function: 'Add new item' renderer. You must handle onClick event via `onAddNewItem` callback or your own callback in case of custom renderer.*
+
+Default: `false`
+
+Example:
+```javascript
+addNewItem(search) {
+  return <div className="my-awesome-class" onClick={this.addNewItemToDropdownOptions}>{`Add '${search}'`}</div>;
+}
+```
+
 ###isOpened: Bool
 *Description: setting this property makes open / close functionality uncontrollable. It always opened when `isOpened === true` and always closed when `isOpened === false`. Setting this property to `undefined` returns component to the usual behaviour.*
 
@@ -314,7 +346,7 @@ Default: `undefined`
 Default: `undefined`
 
 ###clearFilterOnClose: Bool
-*Description: whether to clear input on close or not*
+*Description: whether to clear the input on close or not*
 
 Default: `true`
 

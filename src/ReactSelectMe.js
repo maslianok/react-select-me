@@ -30,22 +30,23 @@ export default class ReactSelectMe extends Component {
     this.getSelectedOptions = this.getSelectedOptions.bind(this);
     this.getListProps = this.getListProps.bind(this);
     this.getOffset = this.getOffset.bind(this);
+    this.getCount = this.getCount.bind(this);
+    this.getSearchString = this.getSearchString.bind(this);
     this.renderList = this.renderList.bind(this);
     this.renderOption = this.renderOption.bind(this);
     this.renderIcon = this.renderIcon.bind(this);
     this.renderSelectedBlock = this.renderSelectedBlock.bind(this);
     this.renderSearchInput = this.renderSearchInput.bind(this);
     this.renderSelectedItem = this.renderSelectedItem.bind(this);
+    this.renderAddNewItem = this.renderAddNewItem.bind(this);
+    this.renderNoItemsFound = this.renderNoItemsFound.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onRemoveSelected = this.onRemoveSelected.bind(this);
     this.onToggle = this.onToggle.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onAddNewItem = this.onAddNewItem.bind(this);
     this.onOpen = this.onOpen.bind(this);
     this.onClose = this.onClose.bind(this);
-
-    if (props.value && props.multiple && !Array.isArray(props.value)) {
-      this.warn('Invalid prop `value` supplied to `react-select-me`, expected `array`.');
-    }
   }
 
   /* ***************************************
@@ -126,7 +127,7 @@ export default class ReactSelectMe extends Component {
   ************** Renderers *****************
   *****************************************/
   renderList() {
-    const { listRenderer, virtualized, s } = this.props;
+    const { addNewItem, searchable, listRenderer, virtualized, s } = this.props;
 
     if (!this.state.opened) {
       return undefined;
@@ -145,9 +146,9 @@ export default class ReactSelectMe extends Component {
       dd__listVirtualized: virtualized,
     });
 
-    if (virtualized) {
+    const rowCount = this.getCount(options);
+    if (rowCount && virtualized) {
       const rowClassName = cs('dd__optionVirtualized', s.dd__optionVirtualized);
-      const rowCount = options.length || options.size;
       return (
         <AutoSizer disableHeight>
           {({ width }) => (
@@ -167,9 +168,18 @@ export default class ReactSelectMe extends Component {
       );
     }
 
+    let listContent;
+    if (rowCount) {
+      listContent = options.map(option => this.renderOption(option, selectedOptions));
+    } else {
+      listContent = addNewItem && searchable && this.getSearchString() ?
+        this.renderAddNewItem() :
+        this.renderNoItemsFound();
+    }
+
     return (
       <div className={listClasses} style={{ maxHeight: `${calculatedListHeight}px` }}>
-        {options.map(option => this.renderOption(option, selectedOptions))}
+        {listContent}
       </div>
     );
   }
@@ -207,7 +217,7 @@ export default class ReactSelectMe extends Component {
 
     const selectedBlockClasses = cs('dd__selected', s.dd__selected);
     const placeholderClasses = cs('dd__placeholder', s.dd__placeholder);
-    const noOptionsSelected = !selectedOptions.size && !selectedOptions.length;
+    const noOptionsSelected = !this.getCount(selectedOptions);
 
     let selectedElements;
     if (!noOptionsSelected && (multiple || !searchable || !opened)) {
@@ -276,6 +286,44 @@ export default class ReactSelectMe extends Component {
     /* eslint-enable */
   }
 
+  renderAddNewItem() {
+    const { s, addNewItem } = this.props;
+    const classNames = cs('dd__option', s.dd__option);
+
+    if (addNewItem === false) {
+      return null;
+    }
+
+    const search = this.getSearchString();
+    if (typeof addNewItem === 'function') {
+      return addNewItem(search);
+    }
+
+    return (
+      <div className={classNames} onClick={this.onAddNewItem}>
+        {typeof addNewItem === 'string' ? addNewItem : `Add '${search}'`}
+      </div>
+    );
+  }
+
+  renderNoItemsFound() {
+    const { s, noItemsFound } = this.props;
+    const classNames = cs('dd__option', 'dd__optionDisabled', s.dd__option, s.dd__optionDisabled);
+
+    if (noItemsFound === false) {
+      return null;
+    }
+
+    if (typeof noItemsFound === 'function') {
+      return noItemsFound();
+    }
+
+    return (
+      <div className={classNames}>
+        {typeof noItemsFound === 'string' ? noItemsFound : 'No items found'}
+      </div>
+    );
+  }
   /* ***************************************
   *************** Getters ******************
   *****************************************/
@@ -284,9 +332,17 @@ export default class ReactSelectMe extends Component {
     return immutable ? option.get(key) : option[key];
   }
 
+  getCount(items) {
+    const { immutable } = this.props;
+    if (!items) {
+      return false;
+    }
+    return immutable ? items.size : items.length;
+  }
+
   getOptions() {
     const { options, labelKey, valueKey } = this.props;
-    if (options && (options.length || options.size)) {
+    if (this.getCount(options)) {
       // options are objects
       if (typeof this.getProp(options, 0) === 'object') {
         return options;
@@ -304,7 +360,7 @@ export default class ReactSelectMe extends Component {
     const { value, multiple } = this.props;
     const options = this.getOptions();
 
-    if (!value || (multiple && !value.length && !value.size)) {
+    if (!value || (multiple && !this.getCount(value))) {
       return this.toImmutable([]);
     }
 
@@ -328,13 +384,17 @@ export default class ReactSelectMe extends Component {
     if (listHeight) {
       refinedHeight = listHeight;
     } else {
-      const optionsCount = options.length || options.size;
-      for (let i = 0; i < optionsCount; i++) {
-        if (refinedHeight >= listMaxHeight) {
-          refinedHeight = listMaxHeight;
-          break;
+      const optionsCount = this.getCount(options);
+      if (optionsCount) {
+        for (let i = 0; i < optionsCount; i++) {
+          if (refinedHeight >= listMaxHeight) {
+            refinedHeight = listMaxHeight;
+            break;
+          }
+          refinedHeight += this.getOptionHeight({ index: i });
         }
-        refinedHeight += this.getOptionHeight({ index: i });
+      } else {
+        refinedHeight = this.getOptionHeight({ index: -1 });
       }
     }
 
@@ -385,10 +445,14 @@ export default class ReactSelectMe extends Component {
     const { optionHeight, options } = this.props;
     return typeof optionHeight === 'function' ? optionHeight(this.getProp(options, index)) : optionHeight;
   }
+
+  getSearchString() {
+    return (this.searchInput.textContent || this.searchInput.innerText || '').replace(/\n/g, '');
+  }
   /* ***************************************
   **************** Events ******************
   *****************************************/
-  onChange(option) {
+  onChange(option, removeFromSelectedBlock) {
     return () => {
       const { multiple, immutable, onChange, valueKey } = this.props;
       let selectedValue;
@@ -410,7 +474,7 @@ export default class ReactSelectMe extends Component {
         selectedValue = option;
       }
 
-      if (onChange(selectedValue) === false) {
+      if (onChange(selectedValue, removeFromSelectedBlock) === false) {
         this.skipEventPropagation();
       }
     };
@@ -419,7 +483,7 @@ export default class ReactSelectMe extends Component {
   onRemoveSelected(option) {
     return e => {
       this.skipEventPropagation();
-      this.onChange(option)(e);
+      this.onChange(option, true)(e);
     };
   }
 
@@ -482,7 +546,7 @@ export default class ReactSelectMe extends Component {
           break;
         case 'input':
           // call filter function onInput
-          const search = (this.searchInput.textContent || this.searchInput.innerText || '').replace(/\n/g, '');
+          const search = this.getSearchString();
           if (search !== this.prevSearch) {
             this.setState({ search });
 
@@ -496,6 +560,13 @@ export default class ReactSelectMe extends Component {
         default:
           break;
       }
+    }
+  }
+
+  onAddNewItem() {
+    const { onAddNewItem } = this.props;
+    if (typeof onAddNewItem === 'function') {
+      onAddNewItem(this.getSearchString());
     }
   }
 
@@ -516,6 +587,7 @@ export default class ReactSelectMe extends Component {
       });
 
       if (this.searchInput) {
+        this.prevSearch = undefined;
         this.searchInput.innerHTML = '';
       }
 
@@ -562,11 +634,13 @@ export default class ReactSelectMe extends Component {
 }
 
 ReactSelectMe.defaultProps = {
+  addNewItem: false,
   beforeClose: () => true,
   beforeOpen: () => true,
   boundaryMargin: 8,
   clearFilterOnClose: true,
   getWrapper: () => null,
+  onAddNewItem: () => null,
   onClose: () => null,
   onChange: () => null,
   onOpen: () => null,
@@ -575,6 +649,7 @@ ReactSelectMe.defaultProps = {
   labelKey: 'label',
   listMaxHeight: 400,
   listPosition: 'auto',
+  noItemsFound: true,
   placeholder: 'Select ...',
   valueKey: 'value',
   s: {},
@@ -582,6 +657,7 @@ ReactSelectMe.defaultProps = {
 
 const classType = T.oneOfType([T.string, T.array]);
 ReactSelectMe.propTypes = {
+  addNewItem: T.oneOfType([T.bool, T.string, T.func]),
   beforeClose: T.func,
   beforeOpen: T.func,
   boundaryMargin: T.number,
@@ -598,6 +674,8 @@ ReactSelectMe.propTypes = {
   listPosition: T.oneOf(['top', 'bottom', 'auto']),
   listRenderer: T.func,
   multiple: T.bool,
+  noItemsFound: T.oneOfType([T.bool, T.string, T.func]),
+  onAddNewItem: T.func,
   onChange: T.func.isRequired,
   onClose: T.func,
   onOpen: T.func,
@@ -639,6 +717,8 @@ ReactSelectMe.propTypes = {
     dd__openTotop: classType,
     // dropdown option
     dd__option: classType,
+    // dropdown option
+    dd__optionDisabled: classType,
     // virtualized option class
     dd__optionVirtualized: classType,
     // selected dropdown option

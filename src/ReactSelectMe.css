@@ -144,6 +144,10 @@
 			border-radius: 3px;
 			box-shadow: 0 3px 7px 0 rgba(var(--color-black), 0.08);
 			box-sizing: content-box;
+
+      &:empty {
+        display: none;
+      }
 		}
 	}
 
@@ -185,3 +189,11 @@
 			.dd__selectedOption {
 				background-color: var(--color-seashell);
 			}
+
+      .dd__optionDisabled {
+        cursor: default;
+
+        &:hover {
+					background-color: transparent;
+				}
+      }

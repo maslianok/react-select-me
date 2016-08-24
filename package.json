@@ -73,10 +73,7 @@
       "react/jsx-sort-props": 0,
       "react/sort-comp": 0,
       "no-case-declarations": 0,
-      "max-len": [
-        2,
-        120
-      ]
+      "max-len": [2, 120]
     },
     "settings": {
       "import/resolver": {
@@ -114,7 +111,6 @@
       "minimist"
     ],
     "include": [
-      "core-js",
       "lodash",
       "eventsource-polyfill"
     ]

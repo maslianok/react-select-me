@@ -61,6 +61,7 @@ export default class App extends React.Component {
     this.getCheckboxFor = this.getCheckboxFor.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onAddNewItem = this.onAddNewItem.bind(this);
     this.optionRenderer = this.optionRenderer.bind(this);
     this.listRenderer = this.listRenderer.bind(this);
     this.iconRenderer = this.iconRenderer.bind(this);
@@ -112,6 +113,19 @@ export default class App extends React.Component {
             ...newState.checkboxes,
             clearFilterOnClose: {
               disabled: !checked,
+              checked: true,
+            },
+          };
+          break;
+        case 'addNewItem':
+          newState[name] = checked;
+          newState.onAddNewItem = checked ? this.onAddNewItem : undefined;
+          newState.searchable = true;
+          newState.onSearch = this.onSearch;
+          newState.checkboxes = {
+            ...newState.checkboxes,
+            searchable: {
+              disabled: checked,
               checked: true,
             },
           };
@@ -246,6 +260,19 @@ export default class App extends React.Component {
     });
   }
 
+  onAddNewItem(searchString) {
+    const { virtualized, multiple } = this.state;
+    const newOption = { value: searchString, label: searchString };
+    if (virtualized) {
+      tonsOfOptions.push(newOption);
+    } else {
+      options.push(newOption);
+    }
+    this.setState({
+      value: multiple ? [...(this.state.value || []), newOption] : newOption,
+    });
+  }
+
   optionRenderer(item, selectedItems) {
     const isSelected = selectedItems.some(selected => selected.value === item.value);
     const optionClassNames = cs(s.customOption, {
@@ -351,6 +378,7 @@ export default class App extends React.Component {
             <div className={s.propsList}>
               {this.getCheckboxFor('multiple', 'Multiple', 'multiple-bool')}
               {this.getCheckboxFor('searchable', 'Searchable', 'searchable-bool')}
+              {this.getCheckboxFor('addNewItem', '"Add new" option')}
               {this.getCheckboxFor('virtualized', 'Virtualized (2k options)', 'virtualized-bool')}
             </div>
           </div>
