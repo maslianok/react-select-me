@@ -301,7 +301,7 @@ export default class ReactSelectMe extends Component {
 
     return (
       <div className={classNames} onClick={this.onAddNewItem}>
-        {typeof addNewItem === 'string' ? addNewItem : `Add '${search}'`}
+        {typeof addNewItem === 'undefined' ? `Add '${search}'` : addNewItem}
       </div>
     );
   }
@@ -320,7 +320,7 @@ export default class ReactSelectMe extends Component {
 
     return (
       <div className={classNames}>
-        {typeof noItemsFound === 'string' ? noItemsFound : 'No items found'}
+        {typeof noItemsFound === 'undefined' ? 'No items found' : noItemsFound}
       </div>
     );
   }
@@ -493,14 +493,14 @@ export default class ReactSelectMe extends Component {
     }
 
     const {
-      props: { searchable, beforeOpen, beforeClose, isOpened },
+      props: { searchable, beforeOpen, beforeClose, isOpened, disabled },
       state: { opened },
     } = this;
 
     const nextState = isOpened !== undefined ? isOpened : !opened;
     const beforeFunc = nextState ? beforeOpen : beforeClose;
 
-    if (nextState !== opened && beforeFunc(e) !== false) {
+    if (!disabled && nextState !== opened && beforeFunc(e) !== false) {
       const afterFunc = nextState ? this.onOpen : this.onClose;
       this.skipEventPropagation();
       if (searchable && this.searchInput) {
@@ -619,7 +619,7 @@ export default class ReactSelectMe extends Component {
       [s.dd__disabled]: disabled,
     });
     const selectControlClasses = cs('dd__selectControl', s.dd__selectControl);
-    const toggleHandler = disabled ? undefined : this.onToggle;
+    const toggleHandler = this.onToggle;
 
     return (
       <div className={wrapperClassnames}>
@@ -657,7 +657,7 @@ ReactSelectMe.defaultProps = {
 
 const classType = T.oneOfType([T.string, T.array]);
 ReactSelectMe.propTypes = {
-  addNewItem: T.oneOfType([T.bool, T.string, T.func]),
+  addNewItem: T.oneOfType([T.bool, T.string, T.func, T.element]),
   beforeClose: T.func,
   beforeOpen: T.func,
   boundaryMargin: T.number,
@@ -674,7 +674,7 @@ ReactSelectMe.propTypes = {
   listPosition: T.oneOf(['top', 'bottom', 'auto']),
   listRenderer: T.func,
   multiple: T.bool,
-  noItemsFound: T.oneOfType([T.bool, T.string, T.func]),
+  noItemsFound: T.oneOfType([T.bool, T.string, T.func, T.element]),
   onAddNewItem: T.func,
   onChange: T.func.isRequired,
   onClose: T.func,
