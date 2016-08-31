@@ -682,7 +682,7 @@ ReactSelectMe.propTypes = {
   onSearch: T.func,
   optionRenderer: T.func,
   options: T.oneOfType([T.array, T.object]),
-  placeholder: T.string,
+  placeholder: T.oneOfType([T.string, T.element]),
   optionHeight: T.oneOfType([T.number, T.func]),
   s: T.shape({
     // wrapper
