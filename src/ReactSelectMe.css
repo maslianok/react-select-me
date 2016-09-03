@@ -11,12 +11,6 @@
 
 .dd__wrapper {
   position: relative;
-  border: 1px solid var(--color-tuna);
-  border-radius: 3px;
-  background-color: var(--color-white);
-  color: var(--color-tuna);
-  font-size: 14px;
-  box-sizing: border-box;
 }
 
 .dd__opened {
@@ -37,7 +31,12 @@
 	.dd__selectControl {
 		display: flex;
 		align-items: center;
+    font-size: 14px;
 		padding: 8px;
+    border: 1px solid var(--color-tuna);
+    border-radius: 3px;
+    background-color: var(--color-white);
+    color: var(--color-tuna);
 		line-height: var(--line-height);
 		cursor: pointer;
 		overflow: hidden;
@@ -128,8 +127,11 @@
 		background-color: var(--color-white);
 		overflow: auto;
 		z-index: 1;
-		box-sizing: border-box;
 		-webkit-overflow-scrolling: touch;
+    min-width: 100%;
+    border: 1px solid var(--color-tuna);
+    border-radius: 3px;
+    box-shadow: 0 3px 7px 0 rgba(var(--color-black), 0.08);
 
 		/* Without this property, Chrome repaints the entire Grid any time a new row or column is added.
 	     Firefox only repaints the new row or column (regardless of this property).
@@ -138,11 +140,6 @@
 
 		@nest .dd__opened & {
 			display: block;
-			min-width: 100%;
-			margin-left: -1px;
-			border: 1px solid var(--color-tuna);
-			border-radius: 3px;
-			box-shadow: 0 3px 7px 0 rgba(var(--color-black), 0.08);
 
       &:empty {
         display: none;
@@ -155,7 +152,6 @@
 	  overflow-x: hidden;
 
 		:global(.Grid__innerScrollContainer) {
-		  box-sizing: border-box;
 		  overflow: hidden;
 		  position: relative;
 		}
@@ -176,7 +172,8 @@
 		}
 
 			.dd__option {
-				padding: 13px 13px 13px 10px;
+				padding: 10px;
+        line-height: var(--line-height);
 				white-space: nowrap;
 				cursor: pointer;
 
