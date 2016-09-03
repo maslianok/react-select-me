@@ -301,7 +301,7 @@ export default class ReactSelectMe extends Component {
 
     return (
       <div className={classNames} onClick={this.onAddNewItem}>
-        {typeof addNewItem === 'undefined' ? `Add '${search}'` : addNewItem}
+        {typeof addNewItem === 'undefined' || addNewItem === true ? `Add '${search}'` : addNewItem}
       </div>
     );
   }
@@ -320,7 +320,7 @@ export default class ReactSelectMe extends Component {
 
     return (
       <div className={classNames}>
-        {typeof noItemsFound === 'undefined' ? 'No items found' : noItemsFound}
+        {typeof noItemsFound === 'undefined' || noItemsFound === true ? 'No items found' : noItemsFound}
       </div>
     );
   }
@@ -566,7 +566,7 @@ export default class ReactSelectMe extends Component {
   onAddNewItem() {
     const { onAddNewItem } = this.props;
     if (typeof onAddNewItem === 'function') {
-      onAddNewItem(this.getSearchString());
+      onAddNewItem(this.getSearchString(), this.getSelectedOptions());
     }
   }
 
