@@ -55,6 +55,7 @@
 			display: flex;
 			flex-grow: 1;
 			flex-wrap: wrap;
+      overflow: hidden;
 
 			@nest .dd__multi & {
 				margin-top: -2px;
@@ -69,6 +70,7 @@
 				outline: 0;
         opacity: 0;
         min-height: var(--line-height);
+        word-break: break-word;
 
 				@nest .dd__multi & {
 					margin-top: 2px;
@@ -114,6 +116,7 @@
 		.dd__expandIcon {
 			width: 9px;
 			height: 15px;
+      flex-shrink: 0;
 			fill: var(--color-shark);
 
 			@nest .dd__error & {

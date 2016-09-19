@@ -251,6 +251,7 @@ export default class ReactSelectMe extends Component {
         onKeyDown={this.onSearch}
         onFocus={this.onSearch}
         onClick={this.onSearch}
+        onPaste={this.onSearch}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -520,9 +521,44 @@ export default class ReactSelectMe extends Component {
       return;
     }
 
+    const doSearch = () => {
+      const search = this.getSearchString();
+      if (search !== this.prevSearch) {
+        this.setState({ search });
+
+        const { onSearch } = this.props;
+        if (typeof onSearch === 'function') {
+          onSearch(search);
+        }
+      }
+      this.prevSearch = search;
+    };
+
     if (!this.skipPropagation) {
       const { opened } = this.state;
       switch (evt.type) {
+        case 'paste':
+          // strip html tags
+          evt.preventDefault();
+
+          // Get pasted data via clipboard API
+          const clipboardData = evt.clipboardData || window.clipboardData;
+          const newContent = this.searchInput.textContent + clipboardData.getData('Text');
+
+          // set new content
+          this.searchInput.textContent = newContent;
+
+          // place cursor to the end
+          const range = document.createRange();
+          range.selectNodeContents(this.searchInput);
+          range.collapse(false);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+
+          // trigger search
+          doSearch();
+          break;
         case 'focus':
           // open dropdown onFocus
           if (!opened) {
@@ -537,25 +573,18 @@ export default class ReactSelectMe extends Component {
           }
           break;
         case 'keydown':
-          // close dropdown on Tab keydown
           if (evt.nativeEvent.keyCode === 9 && opened) {
+            // close dropdown on Tab keydown
             // blur via Tab
             this.onToggle(evt);
             this.skipPropagation = undefined;
+          } else if (evt.nativeEvent.keyCode === 13) {
+            // restrict new line
+            evt.preventDefault();
           }
           break;
         case 'input':
-          // call filter function onInput
-          const search = this.getSearchString();
-          if (search !== this.prevSearch) {
-            this.setState({ search });
-
-            const { onSearch } = this.props;
-            if (typeof onSearch === 'function') {
-              onSearch(search);
-            }
-          }
-          this.prevSearch = search;
+          doSearch();
           break;
         default:
           break;
