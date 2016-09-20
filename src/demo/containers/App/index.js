@@ -299,13 +299,13 @@ export default class App extends React.Component {
             return (
               <div className={s.option} onClick={onChange(item)} key={item.value}>
                 <div className={s.color} style={{ backgroundColor: item.value }}>
-                {isSelected &&
-                  <div className={s.colorSelected}>
-                    <svg fill="#FFF" width="18px" height="15px">
-                      <path d={path} transform="translate(-565 -570)" />
-                    </svg>
-                  </div>
-                }
+                  {isSelected &&
+                    <div className={s.colorSelected}>
+                      <svg fill="#FFF" width="18px" height="15px">
+                        <path d={path} transform="translate(-565 -570)" />
+                      </svg>
+                    </div>
+                  }
                 </div>
                 <div className={labelClasses} style={{ color: isSelected ? item.value : '#1F2123' }}>
                   {item.label}

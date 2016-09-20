@@ -4,7 +4,7 @@
 
 import React, { Component, PropTypes as T } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
-import { VirtualScroll, AutoSizer } from 'react-virtualized';
+import { List, AutoSizer } from 'react-virtualized';
 import { fromJS } from 'immutable';
 import cs from 'classnames';
 
@@ -152,15 +152,15 @@ export default class ReactSelectMe extends Component {
       return (
         <AutoSizer disableHeight>
           {({ width }) => (
-            <VirtualScroll
+            <List
               width={width}
               height={calculatedListHeight}
               rowHeight={this.getOptionHeight}
               rowCount={rowCount}
               className={listClasses}
               rowClassName={rowClassName}
-              rowRenderer={({ index }) =>
-                this.renderOption(this.getProp(options, index), selectedOptions)
+              rowRenderer={({ style, index }) =>
+                this.renderOption(this.getProp(options, index), selectedOptions, style)
               }
             />
           )}
@@ -184,7 +184,7 @@ export default class ReactSelectMe extends Component {
     );
   }
 
-  renderOption(option, selectedOptions) {
+  renderOption(option, selectedOptions, style) {
     const { valueKey, labelKey, optionRenderer, s } = this.props;
     const isSelected = selectedOptions.some(selected =>
       this.getProp(selected, valueKey) === this.getProp(option, valueKey)
@@ -199,7 +199,7 @@ export default class ReactSelectMe extends Component {
       <div className={className}>{this.getProp(option, labelKey)}</div>;
 
     return (
-      <div key={this.getProp(option, valueKey)} onClick={this.onChange(option)}>
+      <div key={this.getProp(option, valueKey)} style={style} onClick={this.onChange(option)}>
         {label}
       </div>
     );

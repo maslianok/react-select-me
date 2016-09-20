@@ -126,7 +126,7 @@
 
 	.dd__list {
 		display: none;
-		position: absolute;
+		position: absolute !important;
 		background-color: var(--color-white);
 		overflow: auto;
 		z-index: 1;
