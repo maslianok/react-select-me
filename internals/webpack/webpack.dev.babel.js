@@ -10,10 +10,6 @@ const cheerio = require('cheerio');
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 const dllPlugin = pkg.dllPlugin;
 
-// PostCSS plugins
-const cssnext = require('postcss-cssnext');
-const postcssReporter = require('postcss-reporter');
-
 const plugins = [
   new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
   new webpack.NoErrorsPlugin(),
@@ -42,16 +38,6 @@ module.exports = require('./webpack.base.babel')({
 
   // Load the CSS in a style tag in development
   cssLoaders: 'style-loader!css-loader?localIdentName=[local]__[hash:base64:5]&modules&importLoaders=1&sourceMap!postcss-loader',
-
-  // Process the CSS with PostCSS
-  postcssPlugins: [
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 10'],
-    }),
-    postcssReporter({
-      clearMessages: true,
-    }),
-  ],
 
   babelQuery: {
     presets: ['react-hmre'],
@@ -110,7 +96,7 @@ function dependencyHandlers() {
   }
 
   // If DLLs are explicitly defined, we automatically create a DLLReferencePlugin for each of them.
-  const dllManifests = Object.keys(dllPlugin.dlls).map((name) => path.join(dllPath, `/${name}.json`));
+  const dllManifests = Object.keys(dllPlugin.dlls).map(name => path.join(dllPath, `/${name}.json`));
 
   return dllManifests.map((manifestPath) => {
     if (!fs.existsSync(path)) {

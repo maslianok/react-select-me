@@ -1,7 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = (options) => ({
+// PostCSS plugins
+const cssnext = require('postcss-cssnext');
+const postcssReporter = require('postcss-reporter');
+
+module.exports = options => ({
   entry: options.entry,
   output: Object.assign({
     path: path.resolve(process.cwd(), 'build'),
@@ -33,7 +37,15 @@ module.exports = (options) => ({
       },
     }),
   ]),
-  postcss: () => options.postcssPlugins,
+  // Process the CSS with PostCSS
+  postcss: () => [
+    cssnext({
+      browsers: ['last 2 versions', 'IE > 10'],
+    }),
+    postcssReporter({
+      clearMessages: true,
+    }),
+  ],
   resolve: {
     modules: ['src/demo', 'node_modules'],
     extensions: [

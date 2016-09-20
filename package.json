@@ -40,6 +40,7 @@
     "build:dll": "node ./internals/scripts/dependencies.js",
     "coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
   },
+  "pre-commit": "test",
   "babel": {
     "presets": [
       "es2015",
@@ -68,15 +69,18 @@
       }
     },
     "rules": {
+      "max-len": [
+        2,
+        120
+      ],
       "import/no-extraneous-dependencies": 0,
       "react/jsx-filename-extension": 0,
       "react/jsx-sort-props": 0,
       "react/sort-comp": 0,
       "no-case-declarations": 0,
-      "max-len": [
-        2,
-        120
-      ]
+      "class-methods-use-this": 0,
+      "react/forbid-prop-types": 0,
+      "jsx-a11y/no-static-element-interactions": 0
     },
     "settings": {
       "import/resolver": {
@@ -143,15 +147,15 @@
     "chai": "^3.5.0",
     "chai-enzyme": "^0.5.0",
     "chalk": "^1.1.3",
-    "cheerio": "^0.20.0",
+    "cheerio": "^0.22.0",
     "compression": "^1.6.2",
     "coveralls": "^2.11.12",
     "cross-env": "^2.0.0",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.25.0",
     "enzyme": "^2.4.1",
     "eslint": "^3.2.0",
-    "eslint-config-airbnb": "^10.0.0",
-    "eslint-import-resolver-webpack": "^0.4.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-import-resolver-webpack": "^0.6.0",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
@@ -167,12 +171,13 @@
     "isparta-loader": "^2.0.0",
     "json-loader": "^0.5.4",
     "karma": "^1.1.2",
-    "karma-chrome-launcher": "^1.0.1",
+    "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
+    "lint-staged": "^3.0.2",
     "lodash": "^4.14.1",
     "minimist": "^1.2.0",
     "mocha": "^3.0.0",
@@ -180,7 +185,7 @@
     "null-loader": "^0.1.1",
     "postcss-cli": "^2.5.2",
     "postcss-cssnext": "^2.7.0",
-    "postcss-loader": "^0.9.1",
+    "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
     "pre-commit": "^1.1.3",
     "psi": "^2.0.4",
@@ -188,8 +193,8 @@
     "shelljs": "^0.7.3",
     "sinon": "^2.0.0-pre",
     "style-loader": "^0.13.1",
-    "stylelint": "^7.0.3",
-    "stylelint-config-standard": "^12.0.0",
+    "stylelint": "7.2.0",
+    "stylelint-config-standard": "^13.0.0",
     "webpack": "2.1.0-beta.21",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"

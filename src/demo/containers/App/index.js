@@ -82,7 +82,7 @@ export default class App extends React.Component {
   }
 
   onPropChange(name) {
-    return e => {
+    return (e) => {
       const checked = e.target.checked;
 
       const newState = {};
@@ -291,7 +291,7 @@ export default class App extends React.Component {
     return (
       <div className={s.customList}>
         <div className={s.list}>
-          {items.map(item => {
+          {items.map((item) => {
             const isSelected = selectedOptions.some(el => el.value === item.value);
             const labelClasses = cs(s.label, {
               [s.colorListLabelSelected]: isSelected,

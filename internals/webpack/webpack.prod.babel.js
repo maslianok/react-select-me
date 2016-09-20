@@ -3,10 +3,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// PostCSS plugins
-const cssnext = require('postcss-cssnext');
-const postcssReporter = require('postcss-reporter');
-
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: [
@@ -20,16 +16,6 @@ module.exports = require('./webpack.base.babel')({
   },
 
   cssLoaders: 'style-loader!css-loader?modules&-autoprefixer&importLoaders=1!postcss-loader',
-
-  // In production, we minify our CSS with cssnano
-  postcssPlugins: [
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 10'],
-    }),
-    postcssReporter({
-      clearMessages: true,
-    }),
-  ],
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(true),
 

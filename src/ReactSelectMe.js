@@ -387,7 +387,7 @@ export default class ReactSelectMe extends Component {
     } else {
       const optionsCount = this.getCount(options);
       if (optionsCount) {
-        for (let i = 0; i < optionsCount; i++) {
+        for (let i = 0; i < optionsCount; i += 1) {
           if (refinedHeight >= listMaxHeight) {
             refinedHeight = listMaxHeight;
             break;
@@ -482,7 +482,7 @@ export default class ReactSelectMe extends Component {
   }
 
   onRemoveSelected(option) {
-    return e => {
+    return (e) => {
       this.skipEventPropagation();
       this.onChange(option, true)(e);
     };
@@ -713,6 +713,7 @@ ReactSelectMe.propTypes = {
   options: T.oneOfType([T.array, T.object]),
   placeholder: T.oneOfType([T.string, T.element]),
   optionHeight: T.oneOfType([T.number, T.func]),
+  /* eslint-disable react/no-unused-prop-types */
   s: T.shape({
     // wrapper
     dd__wrapper: classType,
@@ -753,6 +754,7 @@ ReactSelectMe.propTypes = {
     // selected dropdown option
     dd__selectedOption: classType,
   }),
+  /* eslint-enable react/no-unused-prop-types */
   searchable: T.bool,
   searchInputRenderer: T.func,
   selectedBlockRenderer: T.func,
