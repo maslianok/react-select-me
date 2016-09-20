@@ -1,7 +1,7 @@
 {
   "name": "react-select-me",
   "description": "A highly scalable react dropdown list",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "main": "lib/ReactSelectMe.js",
   "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
@@ -40,7 +40,6 @@
     "build:dll": "node ./internals/scripts/dependencies.js",
     "coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
   },
-  "pre-commit": "test",
   "babel": {
     "presets": [
       "es2015",
