@@ -36,29 +36,24 @@ module.exports = options => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+    new webpack.LoaderOptionsPlugin({
+      test: /\.css$/,
+      options: {
+        // Process the CSS with PostCSS
+        context: __dirname,
+        postcss: [
+          cssnext({ browsers: ['last 2 versions', 'IE > 10'] }),
+          postcssReporter({ clearMessages: true }),
+        ],
+      },
+    }),
   ]),
-  // Process the CSS with PostCSS
-  postcss: () => [
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 10'],
-    }),
-    postcssReporter({
-      clearMessages: true,
-    }),
-  ],
   resolve: {
     modules: ['src/demo', 'node_modules'],
-    extensions: [
-      '',
-      '.js',
-    ],
-    packageMains: [
-      'jsnext:main',
-      'main',
-    ],
+    extensions: ['.js'],
+    mainFields: ['jsnext:main', 'main'],
   },
   devtool: options.devtool,
   target: 'web',
   stats: false,
-  progress: true,
 });
