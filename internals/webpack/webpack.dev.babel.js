@@ -4,13 +4,16 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const logger = require('../../server/logger');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const cheerio = require('cheerio');
+
+const logger = require('../../server/logger');
 
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 const dllPlugin = pkg.dllPlugin;
 
 const plugins = [
+  new DashboardPlugin(),
   new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
   new webpack.NoErrorsPlugin(),
   new HtmlWebpackPlugin({
