@@ -284,7 +284,6 @@ export default class ReactSelectMe extends Component {
         <path d={path} transform="translate(-306 -1308)" />
       </svg>
     );
-    /* eslint-enable */
   }
 
   renderAddNewItem() {
