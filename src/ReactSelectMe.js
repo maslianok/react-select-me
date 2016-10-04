@@ -297,7 +297,7 @@ export default class ReactSelectMe extends Component {
 
     const search = this.getSearchString();
     if (typeof addNewItem === 'function') {
-      return addNewItem(search);
+      return addNewItem(search, this.onAddNewItem);
     }
 
     return (
