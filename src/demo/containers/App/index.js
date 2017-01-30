@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
     this.state = {
       checkboxes: {
-        clearFilterOnClose: {
+        searchClearOnClose: {
           ...checkboxProps,
           checked: true,
           disabled: true,
@@ -111,7 +111,7 @@ export default class App extends React.Component {
           newState.onSearch = checked ? this.onSearch : undefined;
           newState.checkboxes = {
             ...newState.checkboxes,
-            clearFilterOnClose: {
+            searchClearOnClose: {
               disabled: !checked,
               checked: true,
             },
@@ -135,7 +135,7 @@ export default class App extends React.Component {
           newState.value = undefined;
           newState.options = checked ? tonsOfOptions : options;
           break;
-        case 'clearFilterOnClose':
+        case 'searchClearOnClose':
           newState[name] = checked;
           break;
         case 'dontCloseOnChange':
@@ -390,12 +390,12 @@ export default class App extends React.Component {
               {this.getCheckboxFor(
                 'selectedValueRenderer',
                 'Selected value renderer',
-                'selectedvaluerenderer-function'
+                'selectedvaluerenderer-function',
               )}
               {this.getCheckboxFor(
                 'selectedBlockRenderer',
                 'Selected block renderer',
-                'selectedblockrenderer-function'
+                'selectedblockrenderer-function',
               )}
             </div>
           </div>
@@ -409,7 +409,7 @@ export default class App extends React.Component {
               {this.getCheckboxFor('isOpened', 'Always opened', 'isopen-bool')}
               {this.getCheckboxFor('listPosition', 'Opens to top', 'listposition-string')}
               {this.getCheckboxFor('listMaxHeight', 'List max height 100px', 'listmaxheight-number')}
-              {this.getCheckboxFor('clearFilterOnClose', 'Clear search on close', 'clearfilteronclose-bool')}
+              {this.getCheckboxFor('searchClearOnClose', 'Clear search on close', 'searchclearonclose-bool')}
             </div>
           </div>
         </div>

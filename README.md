@@ -345,7 +345,7 @@ Default: `undefined`
 
 Default: `undefined`
 
-###clearFilterOnClose: Bool
+###searchClearOnClose: Bool
 *Description: whether to clear the input on close or not*
 
 Default: `true`

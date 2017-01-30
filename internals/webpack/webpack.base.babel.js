@@ -17,7 +17,7 @@ module.exports = options => ({
       loader: 'json-loader',
     }, {
       test: /\.js$/,
-      loader: 'babel',
+      loader: 'babel-loader',
       exclude: /node_modules/,
       query: options.babelQuery,
     }, {
