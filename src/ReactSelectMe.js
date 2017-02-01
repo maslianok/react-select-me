@@ -238,6 +238,12 @@ export default class ReactSelectMe extends PureComponent {
         onFocus={this.onSearch}
         onClick={this.onSearch}
         onPaste={this.onSearch}
+        onKeyUp={(e) => {
+          /* Internet Explorer detection. See more
+           * http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+           */
+          if (false || !!document.documentMode) this.onSearch(e);
+        }}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -568,6 +574,7 @@ export default class ReactSelectMe extends PureComponent {
           }
           break;
         case 'input':
+        case 'keyup':
           doSearch();
           break;
         default:
