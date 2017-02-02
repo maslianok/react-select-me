@@ -238,12 +238,7 @@ export default class ReactSelectMe extends PureComponent {
         onFocus={this.onSearch}
         onClick={this.onSearch}
         onPaste={this.onSearch}
-        onKeyUp={(e) => {
-          /* Internet Explorer detection. See more
-           * http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-           */
-          if (false || !!document.documentMode) this.onSearch(e);
-        }}
+        onKeyUp={this.onSearch}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -507,7 +502,9 @@ export default class ReactSelectMe extends PureComponent {
   }
 
   onSearch = (evt) => {
-    if (!this.searchInput) {
+    // `document.documentMode` isn't undefined in IE only.
+    // See more https://msdn.microsoft.com/library/cc196988(v=vs.85).aspx
+    if (!this.searchInput || (evt.type === 'keyup' && !document.documentMode)) {
       return;
     }
 
