@@ -238,6 +238,7 @@ export default class ReactSelectMe extends PureComponent {
         onFocus={this.onSearch}
         onClick={this.onSearch}
         onPaste={this.onSearch}
+        onKeyUp={this.onSearch}
         ref={e => (this.searchInput = e)}
       />
     );
@@ -501,7 +502,9 @@ export default class ReactSelectMe extends PureComponent {
   }
 
   onSearch = (evt) => {
-    if (!this.searchInput) {
+    // `document.documentMode` isn't undefined in IE only.
+    // See more https://msdn.microsoft.com/library/cc196988(v=vs.85).aspx
+    if (!this.searchInput || (evt.type === 'keyup' && !document.documentMode)) {
       return;
     }
 
@@ -568,6 +571,7 @@ export default class ReactSelectMe extends PureComponent {
           }
           break;
         case 'input':
+        case 'keyup':
           doSearch();
           break;
         default:
