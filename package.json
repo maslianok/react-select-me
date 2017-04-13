@@ -146,8 +146,6 @@
     "classnames": "^2.2.3",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "react-virtualized": "^9.7.3"
   },
   "devDependencies": {
@@ -215,6 +213,6 @@
     "immutable": "^3.8.1",
     "react": "^0.14.0 || ^15.0.0",
     "react-dom": "^0.14.0 || ^15.0.0",
-    "react-virtualized": "^7.16.0 || ^8.0.0"
+    "react-virtualized": "^8.0.0 || ^9.0.0"
   }
 }
