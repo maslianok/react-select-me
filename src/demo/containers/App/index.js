@@ -56,19 +56,9 @@ export default class App extends React.Component {
       s: selectStyles,
       options,
     };
-
-    this.onPropChange = this.onPropChange.bind(this);
-    this.getCheckboxFor = this.getCheckboxFor.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSearch = this.onSearch.bind(this);
-    this.onAddNewItem = this.onAddNewItem.bind(this);
-    this.optionRenderer = this.optionRenderer.bind(this);
-    this.listRenderer = this.listRenderer.bind(this);
-    this.iconRenderer = this.iconRenderer.bind(this);
-    this.selectedBlockRenderer = this.selectedBlockRenderer.bind(this);
   }
 
-  getCheckboxFor(name, label, anchor) {
+  getCheckboxFor = (name, label, anchor) => {
     const { checkboxes } = this.state;
     return (
       <div className={s.propItem}>
@@ -79,10 +69,10 @@ export default class App extends React.Component {
         </label>
       </div>
     );
-  }
+  };
 
-  onPropChange(name) {
-    return (e) => {
+  onPropChange = name =>
+    e => {
       const checked = e.target.checked;
 
       const newState = {};
@@ -240,27 +230,24 @@ export default class App extends React.Component {
 
       this.setState(newState);
     };
-  }
 
-  onChange(value) {
+  onChange = value => {
     this.setState({
       value,
     });
 
     return this.state.dontCloseOnChange;
-  }
+  };
 
-  onSearch(searchString) {
+  onSearch = searchString => {
     const lowerString = searchString.toLowerCase();
     const currOptions = this.state.virtualized ? tonsOfOptions : options;
     this.setState({
-      options: searchString ?
-        currOptions.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1) :
-        currOptions,
+      options: searchString ? currOptions.filter(o => o.label.toLowerCase().indexOf(lowerString) > -1) : currOptions,
     });
-  }
+  };
 
-  onAddNewItem(searchString) {
+  onAddNewItem = searchString => {
     const { virtualized, multiple } = this.state;
     const newOption = { value: searchString, label: searchString };
     if (virtualized) {
@@ -271,9 +258,9 @@ export default class App extends React.Component {
     this.setState({
       value: multiple ? [...(this.state.value || []), newOption] : newOption,
     });
-  }
+  };
 
-  optionRenderer(item, selectedItems) {
+  optionRenderer = (item, selectedItems) => {
     const isSelected = selectedItems.some(selected => selected.value === item.value);
     const optionClassNames = cs(s.customOption, {
       [s.selected]: isSelected,
@@ -284,14 +271,14 @@ export default class App extends React.Component {
         <div className={s.value}>{item.label}</div>
       </div>
     );
-  }
+  };
 
-  listRenderer(items, selectedOptions, optionRenderer, onChange, onToggle) {
+  listRenderer = (items, selectedOptions, optionRenderer, onChange, onToggle) => {
     const path = 'M564.985,578.822l1.089-1.1L572,584l-1,1ZM571,585l-1-1,11.926-14.015,1.089,1.1Z';
     return (
       <div className={s.customList}>
         <div className={s.list}>
-          {items.map((item) => {
+          {items.map(item => {
             const isSelected = selectedOptions.some(el => el.value === item.value);
             const labelClasses = cs(s.label, {
               [s.colorListLabelSelected]: isSelected,
@@ -304,8 +291,7 @@ export default class App extends React.Component {
                       <svg fill="#FFF" width="18px" height="15px">
                         <path d={path} transform="translate(-565 -570)" />
                       </svg>
-                    </div>
-                  }
+                    </div>}
                 </div>
                 <div className={labelClasses} style={{ color: isSelected ? item.value : '#1F2123' }}>
                   {item.label}
@@ -321,9 +307,9 @@ export default class App extends React.Component {
         </div>
       </div>
     );
-  }
+  };
 
-  selectedBlockRenderer(selectedOptions) {
+  selectedBlockRenderer = selectedOptions => {
     if (!selectedOptions.length) {
       return <div className={s.selectedBlock}>Select an option</div>;
     }
@@ -335,25 +321,23 @@ export default class App extends React.Component {
         {!!otherOptions.length && <div className={s.counter}>+{otherOptions.length}</div>}
       </div>
     );
-  }
+  };
 
-  iconRenderer() {
+  iconRenderer = () => {
     const path = 'M 10.95 1.71 C 10.95 1.71 6.71 5.95 6.71 5.95 C 6.32 6.34 5.68 6.34 5.29 5.95 C 5.29 5.95 1.05 1.71 1.05 1.71 C 0.66 1.32 0.66 0.68 1.05 0.29 C 1.44 -0.1 2.07 -0.1 2.46 0.29 C 2.46 0.29 6 3.83 6 3.83 C 6 3.83 9.54 0.29 9.54 0.29 C 9.93 -0.1 10.56 -0.1 10.95 0.29 C 11.34 0.68 11.34 1.32 10.95 1.71 Z'; // eslint-disable-line max-len
     return (
       <svg width="12px" height="7px">
         <path d={path} />
       </svg>
     );
-  }
+  };
 
-  selectedValueRenderer(item) {
-    return (
-      <div className={s.selectedOption} key={item.value}>
-        <div className={s.selectedColor} style={{ backgroundColor: item.value }} />
-        <div>{item.label}</div>
-      </div>
-    );
-  }
+  selectedValueRenderer = item => (
+    <div className={s.selectedOption} key={item.value}>
+      <div className={s.selectedColor} style={{ backgroundColor: item.value }} />
+      <div>{item.label}</div>
+    </div>
+  );
 
   render() {
     const { dontCloseOnChange, checkboxes, ...params } = this.state; // eslint-disable-line no-unused-vars
@@ -390,12 +374,12 @@ export default class App extends React.Component {
               {this.getCheckboxFor(
                 'selectedValueRenderer',
                 'Selected value renderer',
-                'selectedvaluerenderer-function',
+                'selectedvaluerenderer-function'
               )}
               {this.getCheckboxFor(
                 'selectedBlockRenderer',
                 'Selected block renderer',
-                'selectedblockrenderer-function',
+                'selectedblockrenderer-function'
               )}
             </div>
           </div>

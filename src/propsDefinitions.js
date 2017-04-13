@@ -1,4 +1,4 @@
-import { PropTypes as T } from 'react';
+import T from 'prop-types';
 
 export const defaultProps = {
   addNewItem: false,
