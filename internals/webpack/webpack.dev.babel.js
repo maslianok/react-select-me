@@ -23,11 +23,7 @@ const plugins = [
 
 module.exports = require('./webpack.base.babel')({
   // Add hot reloading in development
-  entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client',
-    path.join(process.cwd(), 'src/demo/app.js'),
-  ],
+  entry: ['eventsource-polyfill', 'webpack-hot-middleware/client', path.join(process.cwd(), 'src/demo/app.js')],
 
   // Don't use hashes in dev mode for better performance
   output: {
@@ -59,7 +55,9 @@ module.exports = require('./webpack.base.babel')({
  */
 function dependencyHandlers() {
   // Don't do anything during the DLL Build step
-  if (process.env.BUILDING_DLL) { return []; }
+  if (process.env.BUILDING_DLL) {
+    return [];
+  }
 
   // If the package.json does not have a dllPlugin property, use the CommonsChunkPlugin
   if (!dllPlugin) {
@@ -100,7 +98,7 @@ function dependencyHandlers() {
   // If DLLs are explicitly defined, we automatically create a DLLReferencePlugin for each of them.
   const dllManifests = Object.keys(dllPlugin.dlls).map(name => path.join(dllPath, `/${name}.json`));
 
-  return dllManifests.map((manifestPath) => {
+  return dllManifests.map(manifestPath => {
     if (!fs.existsSync(path)) {
       if (!fs.existsSync(manifestPath)) {
         logger.error(`The following Webpack DLL manifest is missing: ${path.basename(manifestPath)}`);
@@ -123,11 +121,11 @@ function dependencyHandlers() {
  * DLL Javascript files are loaded in script tags and available to our application.
  */
 function templateContent() {
-  const html = fs.readFileSync(
-    path.resolve(process.cwd(), 'src/demo/index.html')
-  ).toString();
+  const html = fs.readFileSync(path.resolve(process.cwd(), 'src/demo/index.html')).toString();
 
-  if (!dllPlugin) { return html; }
+  if (!dllPlugin) {
+    return html;
+  }
 
   const doc = cheerio(html);
   const body = doc.find('body');

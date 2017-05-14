@@ -3,7 +3,8 @@
 // disable option
 
 import React, { PureComponent } from 'react';
-import { List, AutoSizer } from 'react-virtualized';
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+import List from 'react-virtualized/dist/commonjs/List';
 import { fromJS } from 'immutable';
 import cs from 'classnames';
 
@@ -51,7 +52,7 @@ export default class ReactSelectMe extends PureComponent {
     }
   }
 
-  closeGlobal = (e) => {
+  closeGlobal = e => {
     const { isOpened, beforeClose } = this.props;
     // @maslianok: when you decide to change this, please, keep in mind, that this case should work:
     // Open A -> Open B -> A should be closed
@@ -63,16 +64,16 @@ export default class ReactSelectMe extends PureComponent {
     if (!isOpened && beforeClose(e) !== false) {
       this.setState({ opened: false }, this.onClose);
     }
-  }
+  };
 
   skipEventPropagation = () => {
     this.skipPropagation = true;
-  }
+  };
 
-  toImmutable = (data) => {
+  toImmutable = data => {
     const { immutable } = this.props;
     return immutable ? fromJS(data) : data;
-  }
+  };
 
   patchSelectedOption = (selectedOption, options) => {
     const { valueKey, labelKey } = this.props;
@@ -92,9 +93,9 @@ export default class ReactSelectMe extends PureComponent {
 
     // if not found - map it to object
     return this.toImmutable({ [valueKey]: selectedOption, [labelKey]: selectedOption });
-  }
+  };
 
-  setSearchValue = (value) => {
+  setSearchValue = value => {
     const { onSearch } = this.props;
     this.setState({
       search: value,
@@ -108,7 +109,7 @@ export default class ReactSelectMe extends PureComponent {
     if (typeof onSearch === 'function') {
       onSearch(value);
     }
-  }
+  };
   /* ***************************************
   ************** Renderers *****************
   *****************************************/
@@ -146,8 +147,7 @@ export default class ReactSelectMe extends PureComponent {
               className={listClasses}
               rowClassName={rowClassName}
               rowRenderer={({ style, index }) =>
-                this.renderOption(this.getProp(options, index), selectedOptions, style)
-              }
+                this.renderOption(this.getProp(options, index), selectedOptions, style)}
             />
           )}
         </AutoSizer>
@@ -158,9 +158,9 @@ export default class ReactSelectMe extends PureComponent {
     if (rowCount) {
       listContent = options.map(option => this.renderOption(option, selectedOptions));
     } else {
-      listContent = addNewItem && searchable && this.getSearchString() ?
-        this.renderAddNewItem() :
-        this.renderNoItemsFound();
+      listContent = addNewItem && searchable && this.getSearchString()
+        ? this.renderAddNewItem()
+        : this.renderNoItemsFound();
     }
 
     return (
@@ -168,28 +168,28 @@ export default class ReactSelectMe extends PureComponent {
         {listContent}
       </div>
     );
-  }
+  };
 
   renderOption = (option, selectedOptions, style) => {
     const { valueKey, labelKey, optionRenderer, s } = this.props;
-    const isSelected = selectedOptions.some(selected =>
-      this.getProp(selected, valueKey) === this.getProp(option, valueKey),
+    const isSelected = selectedOptions.some(
+      selected => this.getProp(selected, valueKey) === this.getProp(option, valueKey)
     );
     const className = cs('dd__option', s.dd__option, {
       dd__selectedOption: isSelected,
       [s.dd__selectedOption]: isSelected,
     });
 
-    const label = typeof optionRenderer === 'function' ?
-      optionRenderer(option, selectedOptions) :
-      <div className={className}>{this.getProp(option, labelKey)}</div>;
+    const label = typeof optionRenderer === 'function'
+      ? optionRenderer(option, selectedOptions)
+      : <div className={className}>{this.getProp(option, labelKey)}</div>;
 
     return (
       <div key={this.getProp(option, valueKey)} style={style} onClick={this.onChange(option)}>
         {label}
       </div>
     );
-  }
+  };
 
   renderSelectedBlock = () => {
     const { placeholder, searchable, multiple, s, selectedValueRenderer, selectedBlockRenderer } = this.props;
@@ -217,7 +217,7 @@ export default class ReactSelectMe extends PureComponent {
         {searchable && this.renderSearchInput()}
       </div>
     );
-  }
+  };
 
   renderSearchInput = () => {
     const { s, searchInputRenderer } = this.props;
@@ -242,9 +242,9 @@ export default class ReactSelectMe extends PureComponent {
         ref={e => (this.searchInput = e)}
       />
     );
-  }
+  };
 
-  renderSelectedItem = (option) => {
+  renderSelectedItem = option => {
     const { valueKey, labelKey, multiple, s } = this.props;
     const selectedOptionClasses = cs('dd__selectedItem', s.dd__selectedItem);
     const crossIconClasses = cs('dd__crossIcon', s.dd__crossIcon);
@@ -255,7 +255,7 @@ export default class ReactSelectMe extends PureComponent {
         {multiple && <div className={crossIconClasses} onClick={this.onRemoveSelected(option)}>×</div>}
       </div>
     );
-  }
+  };
 
   renderIcon = () => {
     const { iconRenderer, s } = this.props;
@@ -265,13 +265,14 @@ export default class ReactSelectMe extends PureComponent {
     }
 
     const className = cs('dd__expandIcon', s.dd__expandIcon);
-    const path = 'M315,1318.04l-4.5,4.96-4.5-4.96,0.944-1.04,3.557,3.92,3.553-3.92,0.944,1.04m-9-5.08,4.5-4.96,4.5,4.96-0.944,1.04-3.557-3.92-3.553,3.92L306,1312.96'; // eslint-disable-line max-len
+    const path =
+      'M315,1318.04l-4.5,4.96-4.5-4.96,0.944-1.04,3.557,3.92,3.553-3.92,0.944,1.04m-9-5.08,4.5-4.96,4.5,4.96-0.944,1.04-3.557-3.92-3.553,3.92L306,1312.96'; // eslint-disable-line max-len
     return (
       <svg className={className} viewBox="0 0 9 15" width="9px" height="15px">
         <path d={path} transform="translate(-306 -1308)" />
       </svg>
     );
-  }
+  };
 
   renderAddNewItem = () => {
     const { s, addNewItem } = this.props;
@@ -291,7 +292,7 @@ export default class ReactSelectMe extends PureComponent {
         {typeof addNewItem === 'undefined' || addNewItem === true ? `Add '${search}'` : addNewItem}
       </div>
     );
-  }
+  };
 
   renderNoItemsFound = () => {
     const { s, noItemsFound } = this.props;
@@ -310,22 +311,22 @@ export default class ReactSelectMe extends PureComponent {
         {typeof noItemsFound === 'undefined' || noItemsFound === true ? 'No items found' : noItemsFound}
       </div>
     );
-  }
+  };
   /* ***************************************
   *************** Getters ******************
   *****************************************/
   getProp = (option, key) => {
     const { immutable } = this.props;
     return immutable ? option.get(key) : option[key];
-  }
+  };
 
-  getCount = (items) => {
+  getCount = items => {
     const { immutable } = this.props;
     if (!items) {
       return false;
     }
     return immutable ? items.size : items.length;
-  }
+  };
 
   getOptions = () => {
     const { options, labelKey, valueKey } = this.props;
@@ -341,7 +342,7 @@ export default class ReactSelectMe extends PureComponent {
 
     // no options
     return this.toImmutable([]);
-  }
+  };
 
   getSelectedOptions = () => {
     const { value, multiple } = this.props;
@@ -351,10 +352,10 @@ export default class ReactSelectMe extends PureComponent {
       return this.toImmutable([]);
     }
 
-    return multiple ?
-      value.map(v => this.patchSelectedOption(v, options)) :
-      this.toImmutable([this.patchSelectedOption(value, options)]);
-  }
+    return multiple
+      ? value.map(v => this.patchSelectedOption(v, options))
+      : this.toImmutable([this.patchSelectedOption(value, options)]);
+  };
 
   getListProps = () => {
     const { listHeight, listMaxHeight, listPosition, boundaryMargin, options } = this.props;
@@ -404,7 +405,7 @@ export default class ReactSelectMe extends PureComponent {
       direction,
       calculatedListHeight,
     };
-  }
+  };
 
   getOffset = () => {
     if (this.ssr || !this.el) {
@@ -426,12 +427,12 @@ export default class ReactSelectMe extends PureComponent {
     // calculate offsets based on viewport
     const viewportHeight = window.document.documentElement.clientHeight;
     return { top: rectEl.top, bottom: viewportHeight - rectEl.bottom };
-  }
+  };
 
   getOptionHeight = ({ index }) => {
     const { optionHeight, options } = this.props;
     return typeof optionHeight === 'function' ? optionHeight(this.getProp(options, index)) : optionHeight;
-  }
+  };
 
   getSearchString = () => (this.searchInput.textContent || this.searchInput.innerText || '').replace(/\n/g, '');
 
@@ -445,9 +446,7 @@ export default class ReactSelectMe extends PureComponent {
     if (multiple) {
       // prepare values for multiselect
       const values = this.getSelectedOptions();
-      const selectedIndex = values.findIndex(
-        v => this.getProp(v, valueKey) === this.getProp(option, valueKey),
-      );
+      const selectedIndex = values.findIndex(v => this.getProp(v, valueKey) === this.getProp(option, valueKey));
       if (selectedIndex === -1) {
         // add new option to selected values
         selectedValue = immutable ? values.push(option) : [...values, option];
@@ -466,22 +465,19 @@ export default class ReactSelectMe extends PureComponent {
     if (searchDefaultsToSelectedValue) {
       this.setSearchValue(this.getProp(option, labelKey));
     }
-  }
+  };
 
-  onRemoveSelected = option => (e) => {
+  onRemoveSelected = option => e => {
     this.skipEventPropagation();
     this.onChange(option, true)(e);
-  }
+  };
 
-  onToggle = (e) => {
+  onToggle = e => {
     if (this.skipPropagation) {
       return;
     }
 
-    const {
-      props: { searchable, beforeOpen, beforeClose, isOpened, disabled },
-      state: { opened },
-    } = this;
+    const { props: { searchable, beforeOpen, beforeClose, isOpened, disabled }, state: { opened } } = this;
 
     const nextState = isOpened !== undefined ? isOpened : !opened;
     const beforeFunc = nextState ? beforeOpen : beforeClose;
@@ -499,9 +495,9 @@ export default class ReactSelectMe extends PureComponent {
       }
       this.setState({ opened: nextState }, afterFunc);
     }
-  }
+  };
 
-  onSearch = (evt) => {
+  onSearch = evt => {
     // `document.documentMode` isn't undefined in IE only.
     // See more https://msdn.microsoft.com/library/cc196988(v=vs.85).aspx
     if (!this.searchInput || (evt.type === 'keyup' && !document.documentMode)) {
@@ -578,21 +574,21 @@ export default class ReactSelectMe extends PureComponent {
           break;
       }
     }
-  }
+  };
 
   onAddNewItem = () => {
     const { onAddNewItem } = this.props;
     if (typeof onAddNewItem === 'function') {
       onAddNewItem(this.getSearchString(), this.getSelectedOptions());
     }
-  }
+  };
 
   onOpen = () => {
     const { onOpen } = this.props;
     if (typeof onOpen === 'function') {
       onOpen();
     }
-  }
+  };
 
   onClose = () => {
     const { onClose, searchClearOnClose, searchDefaultsToSelectedValue } = this.props;
@@ -605,7 +601,7 @@ export default class ReactSelectMe extends PureComponent {
     if (typeof onClose === 'function') {
       onClose();
     }
-  }
+  };
   /* ***************************************
   **************** Render ******************
   *****************************************/
