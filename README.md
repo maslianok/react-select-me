@@ -240,7 +240,7 @@ optionRenderer(option, selectedOptions) {
 }
 ```
 
-###listRenderer: Function
+### listRenderer: Function
 *Description: function to render the list*
 
 Arguments:
