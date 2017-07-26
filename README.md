@@ -1,6 +1,6 @@
-#react-select-me
+# react-select-me
 
-##Advantages:
+## Advantages:
 - **Highly scalable and extendable**
 
 You can customize any appearance or/and behaviour you want. We have a lot of useful renderers: [`listRenderer`](#listrenderer-function), [`optionRenderer`](#optionrenderer-function), [`selectedBlockRenderer`](#selectedblockrenderer-function), [`iconRenderer`](#iconrenderer-function) etc.
@@ -35,10 +35,10 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
 
 **Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
 
-##Installation
+## Installation
 `npm i react-select-me --save`
 
-##Usage
+## Usage
 ```javascript
 import Select from 'react-select-me';
 
@@ -67,11 +67,11 @@ export default class App extends React.Component {
 }
 ```
 
-##Examples
-###Live
+## Examples
+### Live
 http://maslianok.github.io/react-select-me/
 
-###Local
+### Local
 1. Clone the repo
 `git clone git@github.com:maslianok/react-select-me.git`
 
@@ -87,8 +87,8 @@ http://maslianok.github.io/react-select-me/
 5. Open `localhost:3000` in your browser
 
 
-##Properties:
-###options: Array
+## Properties:
+### options: Array
 *Description: list of dropdown options*
 
 Default: `undefined`
@@ -97,7 +97,7 @@ Examples:
 - List of primitives: `[1, 2]`
 - List of objects: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
-###value: Any
+### value: Any
 *Description: selected value / values*
 
 Default: `undefined`
@@ -108,27 +108,27 @@ Examples:
 - Array of primitives for multiselect: `[1, 2]`
 - Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
-###multiple: Bool
+### multiple: Bool
 *Description: multi-value dropdown*
 
 Default: `false`
 
-###searchable: Bool
+### searchable: Bool
 *Description: ability to search / filter options. [`onSearch`](#onSearch-function) function will be called*
 
 Default: `false`
 
-###virtualized: Bool
+### virtualized: Bool
 *Description: partly render list options using [react-virtualized](https://bvaughn.github.io/react-virtualized/). Huge time to render boost on large datasets. You have to set [`optionHeight`](#optionheight-number--function) property if your option height differs from default.*
 
 Default: `false`
 
-###immutable: Bool
+### immutable: Bool
 *Description: parse data as [immutable](https://facebook.github.io/immutable-js/) lists. When this property set to `true` you have to provide [`options`](#options-array) and [`value`](#value-any) as immutable objects.*
 
 Default: `false`
 
-###onChange: Function
+### onChange: Function
 *Description: onChange callback. Return `false` to leave dropdown opened.*
 
 Default: `undefined`
@@ -143,7 +143,7 @@ onChange(value) {
 }
 ```
 
-###onSearch: Function
+### onSearch: Function
 *Description: onSearch callback. Calls on every search input change. You have to process search string inside this function and filter your options based on your needs.*
 
 Default: `undefined`
@@ -182,7 +182,7 @@ export default class App extends React.Component {
 }
 ```
 
-###onAddNewItem: Bool
+### onAddNewItem: Bool
 *Description: callback to handle click on the 'Add new item' option*
 
 Default: `undefined`
@@ -190,7 +190,7 @@ Default: `undefined`
 Arguments:
 - `search: String`: search string
 
-###selectedValueRenderer: Function
+### selectedValueRenderer: Function
 *Description: function to render selected value*
 
 Default: `undefined`
@@ -206,7 +206,7 @@ selectedValueRenderer(option, onRemove) {
 }
 ```
 
-###selectedBlockRenderer: Function
+### selectedBlockRenderer: Function
 *Description: function to render block with selected options*
 
 Default: `undefined`
@@ -224,7 +224,7 @@ selectedBlockRenderer(selectedOptions, onRemove) {
 }
 ```
 
-###optionRenderer: Function
+### optionRenderer: Function
 *Description: function to render custom options*
 
 Default: `undefined`
@@ -278,7 +278,7 @@ listRenderer(options, selectedOptions, optionRenderer, onChange, onToggle) {
 }
 ```
 
-###iconRenderer: Function
+### iconRenderer: Function
 *Description: function to render custom icon.*
 
 Default: `undefined`
@@ -293,7 +293,7 @@ iconRenderer(isOpened) {
 }
 ```
 
-###noItemsFound: Bool | String | Function
+### noItemsFound: Bool | String | Function
 *Description: Bool: whether to display 'No items found' option or not. String: 'No items found' label. Function: 'No items found' renderer*
 
 Default: `true`
@@ -305,7 +305,7 @@ noItemsFound() {
 }
 ```
 
-###addNewItem: Bool | String | Function
+### addNewItem: Bool | String | Function
 *Description: Bool: whether to display 'Add new item' option or not. String: 'Add new item' label. Function: 'Add new item' renderer. You must handle onClick event via `onAddNewItem` callback or your own callback in case of custom renderer.*
 
 Default: `false`
@@ -317,12 +317,12 @@ addNewItem(search) {
 }
 ```
 
-###isOpened: Bool
+### isOpened: Bool
 *Description: setting this property makes open / close functionality uncontrollable. It always opened when `isOpened === true` and always closed when `isOpened === false`. Setting this property to `undefined` returns component to the usual behaviour.*
 
 Default: `undefined`
 
-###beforeOpen: Function
+### beforeOpen: Function
 *Description: before open handler. Return `false` to leave dropdown closed.*
 
 Default: `undefined`
@@ -330,40 +330,40 @@ Default: `undefined`
 Arguments:
 - `event: Object`: event
 
-###beforeClose: Function
+### beforeClose: Function
 *Description: before close event. Return `false` to leave dropdown opened.*
 
 Default: `undefined`
 
-###onOpen: Function
+### onOpen: Function
 *Description: handler for when the menu opens*
 
 Default: `undefined`
 
-###onClose: Function
+### onClose: Function
 *Description: handler for when the menu closes*
 
 Default: `undefined`
 
-###searchClearOnClose: Bool
+### searchClearOnClose: Bool
 *Description: whether to clear the input on close or not*
 
 Default: `true`
 
-###listMaxHeight: Number
+### listMaxHeight: Number
 *Description: Dropdown list max height in pixels.*
 
 Default: `400`
 
-###listHeight: Number
+### listHeight: Number
 *Description: when you set this property the list will always have the constant height despite options length and available space. You have to set this property only when you are creating something like horizontally scrolling lists or some other weird lists :) Otherwise, you probably need to `listMaxHeight`.*
 
-###optionHeight: Number | Function
+### optionHeight: Number | Function
 *Description: option height. This property has to be set for virtualized lists, because [react-virtualized](https://github.com/bvaughn/react-virtualized/blob/master/docs/VirtualScroll.md#prop-types) has to know total options height to correctly display scroll. It also used to calculate direction to open the list (in case of `direction="auto"`).*
 
 Default: `40`
 
-###listPosition: String
+### listPosition: String
 *Description: Dropdown list position.*
 
 Default: `auto`
@@ -373,15 +373,15 @@ Available values:
 - `bottom`: expand to bottom
 - `auto`: auto detection based on `wrapper` element
 
-###getWrapper: Function
+### getWrapper: Function
 *Description: Function to get wrapper element. Commonly you have to set this parameter if any of component's parents has `overflow: hidden` property. This parameter affects to `listMaxHeight` and `listPosition` properties.*
 
-###boundaryMargin: Number
+### boundaryMargin: Number
 *Description: the minimal distance between screen / `wrapper` boundaries and dropdown list.*
 
 Default: `6`
 
-###s: Object
+### s: Object
 *Description: component classNames.*
 
 List of supported classes:
