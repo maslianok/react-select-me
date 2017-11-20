@@ -3,7 +3,8 @@
   "description": "A highly scalable react dropdown list",
   "version": "0.9.0",
   "main": "lib/ReactSelectMe.js",
-  "author": "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
+  "author":
+    "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
   "repository": {
     "type": "git",
     "url": "git://github.com/maslianok/react-select-me.git"
@@ -39,12 +40,15 @@
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
+    "husky": "^0.14.3",
     "immutable": "^3.8.2",
     "jest": "20.0.4",
+    "lint-staged": "^5.0.0",
     "postcss-cli": "^4.1.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "^2.0.8",
+    "prettier": "^1.8.2",
     "promise": "8.0.1",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.1.1",
@@ -69,20 +73,26 @@
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-virtualized": "^8.0.0 || ^9.0.0"
   },
+  "lint-staged": {
+    "*.{js,jsx}": ["eslint --fix", "git add"],
+    "*.{json,graphql}": ["prettier --write", "git add"],
+    "*.{css,less,scss,sss}": ["stylelint --fix", "git add"]
+  },
   "scripts": {
+    "precommit": "lint-staged",
     "start": "node scripts/start.js",
     "prepublish": "npm run lint && npm run build",
     "prebuild": "npm run build:clean",
     "build": "npm run build:js && npm run build:css",
-    "build:js": "NODE_ENV=production babel src --out-dir lib --ignore src/examples",
-    "build:css": "postcss -u postcss-cssnext --postcss-cssnext.browsers \"last 2 versions\" -d lib src/ReactSelectMe.css",
+    "build:js":
+      "NODE_ENV=production babel src --out-dir lib --ignore src/examples",
+    "build:css":
+      "postcss -u postcss-cssnext --postcss-cssnext.browsers \"last 2 versions\" -d lib src/ReactSelectMe.css",
     "build:clean": "rimraf ./lib",
     "lint": "eslint --ignore-path .gitignore -- src"
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"
