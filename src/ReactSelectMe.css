@@ -1,0 +1,198 @@
+:root {
+  --color-tuna: #373C43;
+  --color-white: #FFF;
+  --color-pale-sky: #6D757B;
+  --color-mandy: #E9596A;
+  --color-shark: #2D3136;
+  --color-black: #000;
+  --color-seashell: #F1F1F1;
+  --line-height: 20px;
+}
+
+.dd__wrapper {
+  position: relative;
+}
+
+.dd__opened {
+  border-radius: 3px;
+  border-color: var(--color-tuna);
+  color: var(--color-tuna);
+}
+
+.dd__disabled {
+  border-color: var(--color-pale-sky);
+  color: var(--color-pale-sky);
+}
+
+.dd__error {
+	border-color: var(--color-mandy);
+}
+
+	.dd__selectControl {
+		display: flex;
+		align-items: center;
+    font-size: 14px;
+		padding: 8px;
+    border: 1px solid var(--color-tuna);
+    border-radius: 3px;
+    background-color: var(--color-white);
+    color: var(--color-tuna);
+		line-height: var(--line-height);
+		cursor: pointer;
+		overflow: hidden;
+
+		@nest .dd__error & {
+			color: var(--color-mandy);
+			user-select: none;
+		}
+
+		@nest .dd__disabled & {
+			cursor: default;
+		}
+	}
+
+		.dd__selected {
+			display: flex;
+			flex-grow: 1;
+			flex-wrap: wrap;
+      overflow: hidden;
+
+			@nest .dd__multi & {
+				margin-top: -2px;
+			}
+		}
+
+			.dd__search {
+				display: inline-block;
+				align-items: center;
+				flex-grow: 1;
+				border: 1px solid transparent;
+				outline: 0;
+        opacity: 0;
+        min-height: var(--line-height);
+        word-break: break-word;
+
+				@nest .dd__multi & {
+					margin-top: 2px;
+				}
+
+        @nest .dd__opened & {
+					opacity: 1;
+				}
+			}
+
+			.dd__placeholder {
+				border: 1px solid transparent;
+				color: var(--color-pale-sky);
+
+				@nest .dd__multi & {
+					margin-top: 2px;
+				}
+
+				@nest .dd__error & {
+					color: var(--color-mandy);
+					user-select: none;
+				}
+			}
+
+			.dd__selectedItem {
+				display: flex;
+				border: 1px solid transparent;
+
+				@nest .dd__multi & {
+					border-color: #A9B6D2;
+					background-color: #E3EAF6;
+					border-radius: 2px;
+					margin-top: 2px;
+					margin-right: 2px;
+					padding: 0 4px;
+				}
+			}
+
+				.dd__crossIcon {
+					margin-left: 5px;
+				}
+
+		.dd__expandIcon {
+			width: 9px;
+			height: 15px;
+      flex-shrink: 0;
+			fill: var(--color-shark);
+
+			@nest .dd__error & {
+				fill: var(--color-mandy);
+			}
+		}
+
+	.dd__list {
+		display: none;
+		position: absolute !important;
+		background-color: var(--color-white);
+		overflow: auto;
+		z-index: 1;
+		-webkit-overflow-scrolling: touch;
+    min-width: 100%;
+    border: 1px solid var(--color-tuna);
+    border-radius: 3px;
+    box-shadow: 0 3px 7px 0 rgba(var(--color-black), 0.08);
+
+		/* Without this property, Chrome repaints the entire Grid any time a new row or column is added.
+	     Firefox only repaints the new row or column (regardless of this property).
+	     Safari and IE don't support the property at all. */
+	  will-change: transform;
+
+		@nest .dd__opened & {
+			display: block;
+
+      &:empty {
+        display: none;
+      }
+		}
+	}
+
+	.dd__listVirtualized {
+	  overflow-y: auto;
+	  overflow-x: hidden;
+
+		:global(.Grid__innerScrollContainer) {
+		  overflow: hidden;
+		  position: relative;
+		}
+	}
+
+	.dd__openTobottom {
+		top: 100%;
+		margin-top: 5px;
+	}
+
+	.dd__openTotop {
+		bottom: 100%;
+		margin-bottom: 5px;
+	}
+
+		.dd__optionVirtualized {
+			position: absolute;
+		}
+
+			.dd__option {
+				padding: 10px;
+        line-height: var(--line-height);
+				white-space: nowrap;
+				cursor: pointer;
+
+				&:hover {
+					background-color: var(--color-seashell);
+				}
+			}
+
+			.dd__selectedOption {
+				background-color: var(--color-seashell);
+			}
+
+      .dd__optionDisabled {
+        cursor: default;
+
+        &:hover {
+					background-color: transparent;
+				}
+      }

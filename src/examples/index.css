@@ -1,0 +1,213 @@
+html,
+body,
+div,
+span,
+ul,
+li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	box-sizing: border-box;
+}
+
+body {
+	line-height: 1;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+.header {
+  font-size: 32px;
+  background: rgba(0, 132, 180, 0.8);
+  color: #FFF;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.menu {
+  background-color: #0084B4;
+  color: #FFF;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+
+  & a {
+    color: #FFF;
+  }
+}
+
+.example {
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+  .propsWraper {
+    display: flex;
+    justify-content: center;
+  }
+
+    .propsColumn {
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+      .columnTitle {
+        text-transform: uppercase;
+        color: #666;
+        margin: auto;
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
+
+      .propsList {
+        flex-grow: 1;
+      }
+
+      .linkToApi {
+        visibility: hidden;
+        font-variant: small-caps;
+        margin-left: 6px;
+      }
+
+      .propItem {
+        display: flex;
+        align-items: center;
+        line-height: 24px;
+
+        &:hover {
+          & .linkToApi {
+            visibility: visible;
+          }
+        }
+      }
+
+        .propsLabel {
+          margin-left: 4px;
+        }
+
+  .selectedOption {
+    display: flex;
+    align-items: center;
+
+    & .selectedColor {
+      width: 12px;
+      height: 12px;
+      margin: 6px;
+      border-radius: 50%;
+    }
+  }
+
+  .customOption {
+    display: flex;
+    cursor: pointer;
+
+    & .selected {
+      background-color: #EEE;
+    }
+
+    & .color {
+      width: 16px;
+      margin: 8px;
+      border-radius: 50%;
+    }
+
+    & .value {
+      padding: 8px 20px;
+    }
+  }
+
+  .customList {
+		position: fixed;
+		top: 40px;
+		width: 290px;
+		padding: 19px 16px;
+    margin: auto;
+		border: 1px solid #969DA2;
+		border-radius: 4px;
+		background-color: #FFF;
+		z-index: 1;
+
+    & .list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid $969DA2;
+    }
+
+      & .option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 62px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+        & .color {
+          position: relative;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+        }
+
+          & .colorSelected {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 18px;
+            height: 15px;
+            margin: auto;
+          }
+
+    & .actions {
+			text-align: center;
+		}
+
+      & .choose {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #FFF;
+        background-color: #5CB85C;
+        border-color: #4CAE4C;
+      }
+  }
+
+  .selectedBlock {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    line-height: 22px;
+
+    & .value {
+      margin-right: 5px;
+    }
+
+    & .counter {
+      font-style: italic;
+      color: #22D3B1;
+    }
+  }
