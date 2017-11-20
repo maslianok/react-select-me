@@ -1,7 +1,7 @@
 {
   "name": "react-select-me",
   "description": "A highly scalable react dropdown list",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "main": "lib/ReactSelectMe.js",
   "author":
     "Vitalii Maslianok <maslianok@gmail.com> (https://github.com/maslianok)",
