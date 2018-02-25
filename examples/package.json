@@ -1,0 +1,20 @@
+{
+  "name": "examples",
+  "version": "1.1.0",
+  "private": true,
+  "devDependencies": {
+    "linklocal": "^2.8.1",
+    "react-scripts": "^1.1.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-select-me": "file:../"
+  },
+  "scripts": {
+    "start": "linklocal && react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  }
+}

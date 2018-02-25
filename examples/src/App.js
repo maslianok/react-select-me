@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import cs from 'classnames';
 
-import Select from '../ReactSelectMe';
+import Select from 'react-select-me';
 
-import s from './index.css';
-import selectStyles from '../ReactSelectMe.css';
+import './index.css';
+import 'react-select-me/lib/ReactSelectMe.css';
 
 const options = [
   { value: 'red', label: 'Red' },
@@ -53,7 +53,7 @@ export default class App extends Component {
         virtualized: checkboxProps,
       },
       onChange: this.onChange.bind(this),
-      s: selectStyles,
+      // s: selectStyles,
       options,
     };
   }
@@ -61,12 +61,12 @@ export default class App extends Component {
   getCheckboxFor = (name, label, anchor) => {
     const { checkboxes } = this.state;
     return (
-      <div className={s.propItem}>
+      <div className="propItem">
         <input type="checkbox" {...checkboxes[name]} id={name} onChange={this.onPropChange(name)} />
-        <label className={s.propsLabel} htmlFor={name}>
+        <label className="propsLabel" htmlFor={name}>
           {label}
           {anchor && (
-            <a target="__blank" className={s.linkToApi} href={`${LINK}#${anchor}`}>
+            <a target="__blank" className="linkToApi" href={`${LINK}#${anchor}`}>
               [doc]
             </a>
           )}
@@ -265,13 +265,13 @@ export default class App extends Component {
 
   optionRenderer = (item, selectedItems) => {
     const isSelected = selectedItems.some(selected => selected.value === item.value);
-    const optionClassNames = cs(s.customOption, {
-      [s.selected]: isSelected,
+    const optionClassNames = cs('customOption', {
+      selected: isSelected,
     });
     return (
       <div className={optionClassNames}>
-        <div className={s.color} style={{ backgroundColor: item.value }} />
-        <div className={s.value}>{item.label}</div>
+        <div className="color" style={{ backgroundColor: item.value }} />
+        <div className="value">{item.label}</div>
       </div>
     );
   };
@@ -279,18 +279,18 @@ export default class App extends Component {
   listRenderer = (items, selectedOptions, optionRenderer, onChange, onToggle) => {
     const path = 'M564.985,578.822l1.089-1.1L572,584l-1,1ZM571,585l-1-1,11.926-14.015,1.089,1.1Z';
     return (
-      <div className={s.customList}>
-        <div className={s.list}>
+      <div className="customList">
+        <div className="list">
           {items.map(item => {
             const isSelected = selectedOptions.some(el => el.value === item.value);
-            const labelClasses = cs(s.label, {
-              [s.colorListLabelSelected]: isSelected,
+            const labelClasses = cs('label', {
+              colorListLabelSelected: isSelected,
             });
             return (
-              <div className={s.option} onClick={onChange(item)} key={item.value}>
-                <div className={s.color} style={{ backgroundColor: item.value }}>
+              <div className="option" onClick={onChange(item)} key={item.value}>
+                <div className="color" style={{ backgroundColor: item.value }}>
                   {isSelected && (
-                    <div className={s.colorSelected}>
+                    <div className="colorSelected">
                       <svg fill="#FFF" width="18px" height="15px">
                         <path d={path} transform="translate(-565 -570)" />
                       </svg>
@@ -304,8 +304,8 @@ export default class App extends Component {
             );
           })}
         </div>
-        <div className={s.actions}>
-          <button onClick={onToggle} className={s.choose}>
+        <div className="actions">
+          <button onClick={onToggle} className="choose">
             <span>Choose</span>
           </button>
         </div>
@@ -315,14 +315,14 @@ export default class App extends Component {
 
   selectedBlockRenderer = selectedOptions => {
     if (!selectedOptions.length) {
-      return <div className={s.selectedBlock}>Select an option</div>;
+      return <div className="selectedBlock">Select an option</div>;
     }
 
     const [firstOption, ...otherOptions] = selectedOptions;
     return (
-      <div className={s.selectedBlock}>
-        <div className={s.value}>{firstOption.label}</div>
-        {!!otherOptions.length && <div className={s.counter}>+{otherOptions.length}</div>}
+      <div className="selectedBlock">
+        <div className="value">{firstOption.label}</div>
+        {!!otherOptions.length && <div className="counter">+{otherOptions.length}</div>}
       </div>
     );
   };
@@ -338,8 +338,8 @@ export default class App extends Component {
   };
 
   selectedValueRenderer = item => (
-    <div className={s.selectedOption} key={item.value}>
-      <div className={s.selectedColor} style={{ backgroundColor: item.value }} />
+    <div className="selectedOption" key={item.value}>
+      <div className="selectedColor" style={{ backgroundColor: item.value }} />
       <div>{item.label}</div>
     </div>
   );
@@ -348,30 +348,30 @@ export default class App extends Component {
     const { dontCloseOnChange, checkboxes, ...params } = this.state; // eslint-disable-line no-unused-vars
     return (
       <div>
-        <div className={s.header}>react-select-me</div>
-        <ul className={s.menu}>
+        <div className="header">react-select-me</div>
+        <ul className="menu">
           <li>
             <a href={LINK}>GitHub</a>
           </li>
         </ul>
 
-        <div className={s.example}>
+        <div className="example">
           <Select {...params} />
         </div>
 
-        <div className={s.propsWraper}>
-          <div className={s.propsColumn}>
-            <div className={s.columnTitle}>General</div>
-            <div className={s.propsList}>
+        <div className="propsWraper">
+          <div className="propsColumn">
+            <div className="columnTitle">General</div>
+            <div className="propsList">
               {this.getCheckboxFor('multiple', 'Multiple', 'multiple-bool')}
               {this.getCheckboxFor('searchable', 'Searchable', 'searchable-bool')}
               {this.getCheckboxFor('addNewItem', '"Add new" option')}
               {this.getCheckboxFor('virtualized', 'Virtualized (2k options)', 'virtualized-bool')}
             </div>
           </div>
-          <div className={s.propsColumn}>
-            <div className={s.columnTitle}>Renderers</div>
-            <div className={s.propsList}>
+          <div className="propsColumn">
+            <div className="columnTitle">Renderers</div>
+            <div className="propsList">
               {this.getCheckboxFor('iconRenderer', 'Icon renderer', 'iconrenderer-function')}
               {this.getCheckboxFor('optionRenderer', 'Option renderer', 'optionrenderer-function')}
               {this.getCheckboxFor(
@@ -386,9 +386,9 @@ export default class App extends Component {
               )}
             </div>
           </div>
-          <div className={s.propsColumn}>
-            <div className={s.columnTitle}>Other</div>
-            <div className={s.propsList}>
+          <div className="propsColumn">
+            <div className="columnTitle">Other</div>
+            <div className="propsList">
               {this.getCheckboxFor('dontCloseOnChange', 'Do not close on change')}
               {this.getCheckboxFor('disabled', 'Disabled')}
               {this.getCheckboxFor('placeholder', 'Set placeholder')}
