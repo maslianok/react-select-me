@@ -24,9 +24,9 @@ export default class ReactSelectMe extends PureComponent {
     this.ssr = typeof window === 'undefined';
   }
 
-  /* ***************************************
-  ************ Lifecycle events ************
-  *****************************************/
+  /** **************************************
+   ************ Lifecycle events ************
+   **************************************** */
   componentDidMount() {
     document.addEventListener('click', this.closeGlobal);
   }
@@ -43,9 +43,9 @@ export default class ReactSelectMe extends PureComponent {
     document.removeEventListener('click', this.closeGlobal);
   }
 
-  /* ***************************************
-  **************** Utils *******************
-  *****************************************/
+  /** **************************************
+   **************** Utils *******************
+   **************************************** */
   warn(msg) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn(msg); // eslint-disable-line no-console
@@ -110,9 +110,9 @@ export default class ReactSelectMe extends PureComponent {
       onSearch(value);
     }
   };
-  /* ***************************************
-  ************** Renderers *****************
-  *****************************************/
+  /** **************************************
+   ************** Renderers *****************
+   **************************************** */
   renderList = () => {
     const { addNewItem, searchable, listRenderer, virtualized, s } = this.props;
 
@@ -147,7 +147,8 @@ export default class ReactSelectMe extends PureComponent {
               className={listClasses}
               rowClassName={rowClassName}
               rowRenderer={({ style, index }) =>
-                this.renderOption(this.getProp(options, index), selectedOptions, style)}
+                this.renderOption(this.getProp(options, index), selectedOptions, style)
+              }
             />
           )}
         </AutoSizer>
@@ -240,7 +241,9 @@ export default class ReactSelectMe extends PureComponent {
         onClick={this.onSearch}
         onPaste={this.onSearch}
         onKeyUp={this.onSearch}
-        ref={e => (this.searchInput = e)}
+        ref={e => {
+          this.searchInput = e;
+        }}
       />
     );
   };
@@ -317,9 +320,9 @@ export default class ReactSelectMe extends PureComponent {
       </div>
     );
   };
-  /* ***************************************
-  *************** Getters ******************
-  *****************************************/
+  /** **************************************
+   *************** Getters ******************
+   **************************************** */
   getProp = (option, key) => {
     const { immutable } = this.props;
     return immutable ? option.get(key) : option[key];
@@ -441,9 +444,9 @@ export default class ReactSelectMe extends PureComponent {
 
   getSearchString = () => (this.searchInput.textContent || this.searchInput.innerText || '').replace(/\n/g, '');
 
-  /* ***************************************
-  **************** Events ******************
-  *****************************************/
+  /** **************************************
+   **************** Events ******************
+   **************************************** */
   onChange = (option, removeFromSelectedBlock) => () => {
     const { multiple, immutable, onChange, valueKey, labelKey, searchDefaultsToSelectedValue } = this.props;
     let selectedValue;
@@ -607,9 +610,9 @@ export default class ReactSelectMe extends PureComponent {
       onClose();
     }
   };
-  /* ***************************************
-  **************** Render ******************
-  *****************************************/
+  /** **************************************
+   **************** Render ******************
+   **************************************** */
   render() {
     const { error, multiple, disabled, s } = this.props;
     const { opened } = this.state;
@@ -630,7 +633,13 @@ export default class ReactSelectMe extends PureComponent {
 
     return (
       <div className={wrapperClassnames}>
-        <div className={selectControlClasses} onClick={toggleHandler} ref={el => (this.el = el)}>
+        <div
+          className={selectControlClasses}
+          onClick={toggleHandler}
+          ref={el => {
+            this.el = el;
+          }}
+        >
           {this.renderSelectedBlock()}
           {this.renderIcon()}
         </div>
