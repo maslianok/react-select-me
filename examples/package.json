@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "linklocal && react-scripts start",
-    "build": "react-scripts build",
+    "build": "linklocal && react-scripts build",
     "eject": "react-scripts eject"
   }
 }

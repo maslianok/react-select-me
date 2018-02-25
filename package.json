@@ -21,6 +21,8 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "postcss-cli": "^5.0.0",
+    "postcss-cssnext": "^3.1.0",
     "prettier": "^1.10.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -46,7 +48,9 @@
     "url": "git://github.com/maslianok/react-select-me.git"
   },
   "scripts": {
-    "build": "babel --presets=react,es2015 --plugins=transform-object-assign,transform-class-properties src --out-dir lib",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "babel --presets=react,es2015 --plugins=transform-object-assign,transform-class-properties src --out-dir lib",
+    "build:css": "postcss -u postcss-cssnext --postcss-cssnext.browsers \"last 2 versions\" -d lib src/ReactSelectMe.css",
     "clean": "rimraf lib",
     "lint": "eslint -c .eslintrc src",
     "prepublishOnly": "npm run lint && npm run clean && npm run build"
