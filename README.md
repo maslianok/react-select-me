@@ -14,19 +14,11 @@ You can literally customize any piece of the component using [`listRenderer`](#l
 
 We have [various HOC's](#hoc) that may help you to integrate with your existing application.
 
-#### CSS modules
+#### 💃 CSS modules
 
 All of our classes are extendable with CSS modules. Take a look at [list of them](#s-object).
 
-#### Direction to open
-
-We automatically detect direction to open. You can even tell us to calculate offsets based on any [wrapper](#getwrapper-function) you want. You can disable this functionality by changing [`direction`](#direction-string) property.
-
-#### Server side rendering
-
-It wasn't hard at all.
-
-#### Debuggable
+#### 🕵️‍♂️ Debuggable
 
 Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm talking about, right?
 
