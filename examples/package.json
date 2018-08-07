@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "linklocal": "^2.8.1",
-    "react-scripts": "^1.1.1"
+    "react-scripts": "^1.1.1",
+    "webpack-bundle-analyzer": "^2.13.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",

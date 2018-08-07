@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import cs from 'classnames';
 
 import Select from 'react-select-me';
+import makeVirtualized from 'react-select-me/lib/hoc/makeVirtualized';
 
-import './index.css';
 import 'react-select-me/lib/ReactSelectMe.css';
+import './index.css';
+
+const VirtualizedSelect = makeVirtualized(Select);
 
 const options = [
   { value: 'red', label: 'Red' },
@@ -76,7 +79,7 @@ export default class App extends Component {
   };
 
   onPropChange = name => e => {
-    const checked = e.target.checked;
+    const { checked } = e.target;
 
     const newState = {};
     newState.checkboxes = {
@@ -355,9 +358,7 @@ export default class App extends Component {
           </li>
         </ul>
 
-        <div className="example">
-          <Select {...params} />
-        </div>
+        <div className="example">{params.virtualized ? <VirtualizedSelect {...params} /> : <Select {...params} />}</div>
 
         <div className="propsWraper">
           <div className="propsColumn">

@@ -119,4 +119,6 @@ export const propTypes = {
   value: T.any,
   valueKey: T.string,
   virtualized: T.bool,
+  // from HOC
+  toImmutable: T.func,
 };

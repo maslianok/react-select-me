@@ -3,9 +3,7 @@
 // disable option
 
 import React, { PureComponent } from 'react';
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import List from 'react-virtualized/dist/commonjs/List';
-import { fromJS } from 'immutable';
+
 import cs from 'classnames';
 
 import { defaultProps, propTypes } from './propsDefinitions';
@@ -70,9 +68,9 @@ export default class ReactSelectMe extends PureComponent {
     this.skipPropagation = true;
   };
 
-  toImmutable = data => {
-    const { immutable } = this.props;
-    return immutable ? fromJS(data) : data;
+  validateDataStructure = data => {
+    const { toImmutable } = this.props;
+    return typeof toImmutable === 'function' ? toImmutable(data) : data;
   };
 
   patchSelectedOption = (selectedOption, options) => {
@@ -92,7 +90,7 @@ export default class ReactSelectMe extends PureComponent {
     }
 
     // if not found - map it to object
-    return this.toImmutable({ [valueKey]: selectedOption, [labelKey]: selectedOption });
+    return this.validateDataStructure({ [valueKey]: selectedOption, [labelKey]: selectedOption });
   };
 
   setSearchValue = value => {
@@ -114,7 +112,7 @@ export default class ReactSelectMe extends PureComponent {
    ************** Renderers *****************
    **************************************** */
   renderList = () => {
-    const { addNewItem, searchable, listRenderer, virtualized, s } = this.props;
+    const { addNewItem, searchable, listRenderer, virtualized, s, renderVirtualizedList } = this.props;
 
     if (!this.state.opened) {
       return undefined;
@@ -134,25 +132,16 @@ export default class ReactSelectMe extends PureComponent {
     });
 
     const rowCount = this.getCount(options);
-    if (rowCount && virtualized) {
+    if (rowCount && typeof renderVirtualizedList === 'function') {
       const rowClassName = cs('dd__optionVirtualized', s.dd__optionVirtualized);
-      return (
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <List
-              width={width}
-              height={calculatedListHeight}
-              rowHeight={this.getOptionHeight}
-              rowCount={rowCount}
-              className={listClasses}
-              rowClassName={rowClassName}
-              rowRenderer={({ style, index }) =>
-                this.renderOption(this.getProp(options, index), selectedOptions, style)
-              }
-            />
-          )}
-        </AutoSizer>
-      );
+      return renderVirtualizedList({
+        rowRenderer: ({ style, index }) => this.renderOption(this.getProp(options, index), selectedOptions, style),
+        rowCount,
+        calculatedListHeight,
+        getOptionHeight: this.getOptionHeight,
+        listClasses,
+        rowClassName,
+      });
     }
     let listContent;
     if (rowCount) {
@@ -345,11 +334,11 @@ export default class ReactSelectMe extends PureComponent {
       }
 
       // options are strings or numbers
-      return options.map(option => this.toImmutable({ [labelKey]: option, [valueKey]: option }));
+      return options.map(option => this.validateDataStructure({ [labelKey]: option, [valueKey]: option }));
     }
 
     // no options
-    return this.toImmutable([]);
+    return this.validateDataStructure([]);
   };
 
   getSelectedOptions = () => {
@@ -357,12 +346,12 @@ export default class ReactSelectMe extends PureComponent {
     const options = this.getOptions();
 
     if (!value || (multiple && !this.getCount(value))) {
-      return this.toImmutable([]);
+      return this.validateDataStructure([]);
     }
 
     return multiple
       ? value.map(v => this.patchSelectedOption(v, options))
-      : this.toImmutable([this.patchSelectedOption(value, options)]);
+      : this.validateDataStructure([this.patchSelectedOption(value, options)]);
   };
 
   getListProps = () => {
