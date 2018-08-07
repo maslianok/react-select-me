@@ -1,6 +1,6 @@
 # react-select-me
 
-## Advantages:
+## Advantages
 
 #### 🐜 Lightweight
 
