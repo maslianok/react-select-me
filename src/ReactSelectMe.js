@@ -345,7 +345,7 @@ export default class ReactSelectMe extends PureComponent {
     const { value, multiple } = this.props;
     const options = this.getOptions();
 
-    if (!value || (multiple && !this.getCount(value))) {
+    if (typeof value === 'undefined' || (multiple && !this.getCount(value))) {
       return this.validateDataStructure([]);
     }
 
