@@ -74,23 +74,20 @@ export default class ReactSelectMe extends PureComponent {
   };
 
   patchSelectedOption = (selectedOption, options) => {
-    const { valueKey, labelKey } = this.props;
-    // if object
-    if (typeof selectedOption === 'object') {
-      // just return this value
-      return selectedOption;
-    }
+    const { valueKey, labelKey, forbidPhantomSelection } = this.props;
 
-    // if primitive (Number or String)
+    // search for this option in the `options` array
+    const value = typeof selectedOption === 'object' ? selectedOption[valueKey] : selectedOption;
+    const option = options.find(o => this.getProp(o, valueKey) === value);
 
-    // search for this option in `options` array
-    const option = options.find(o => this.getProp(o, valueKey) === selectedOption);
-    if (option) {
+    if (option || forbidPhantomSelection) {
       return option;
     }
 
-    // if not found - map it to object
-    return this.validateDataStructure({ [valueKey]: selectedOption, [labelKey]: selectedOption });
+    // if not found - make a phantom selection
+    return typeof selectedOption === 'object'
+      ? selectedOption
+      : this.validateDataStructure({ [valueKey]: selectedOption, [labelKey]: selectedOption });
   };
 
   setSearchValue = value => {
@@ -349,9 +346,11 @@ export default class ReactSelectMe extends PureComponent {
       return this.validateDataStructure([]);
     }
 
-    return multiple
+    const patchedOptions = multiple
       ? value.map(v => this.patchSelectedOption(v, options))
-      : this.validateDataStructure([this.patchSelectedOption(value, options)]);
+      : [this.patchSelectedOption(value, options)];
+
+    return this.validateDataStructure(patchedOptions.filter(option => !!option));
   };
 
   getListProps = () => {
@@ -573,10 +572,10 @@ export default class ReactSelectMe extends PureComponent {
     }
   };
 
-  onAddNewItem = () => {
+  onAddNewItem = params => {
     const { onAddNewItem } = this.props;
     if (typeof onAddNewItem === 'function') {
-      onAddNewItem(this.getSearchString(), this.getSelectedOptions());
+      onAddNewItem(this.getSearchString(), this.getSelectedOptions(), params);
     }
   };
 

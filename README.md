@@ -58,6 +58,7 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
   * [listPosition: String](#listposition-string)
   * [getWrapper: Function](#getwrapper-function)
   * [boundaryMargin: Number](#boundarymargin-number)
+  * [forbidPhantomSelection: Bool](#forbidphantomselection-bool)
   * [s: Object](#s-object)
 
 ## Installation
@@ -493,6 +494,12 @@ _Description: Function to get wrapper element. Commonly you have to set this par
 _Description: the minimal distance between screen / `wrapper` boundaries and dropdown list._
 
 Default: `6`
+
+### forbidPhantomSelection: Bool
+
+_Description: doesn't select a `value` option if it doesn't exist in `options` array_
+
+Default: `false`
 
 ### s: Object
 

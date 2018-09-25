@@ -48,6 +48,7 @@ export const propTypes = {
   boundaryMargin: T.number,
   disabled: T.bool,
   error: T.bool,
+  forbidPhantomSelection: T.bool,
   getWrapper: T.func,
   iconRenderer: T.func,
   immutable: T.bool,
