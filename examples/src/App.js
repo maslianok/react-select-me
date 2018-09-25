@@ -349,7 +349,6 @@ export default class App extends Component {
 
   render() {
     const { dontCloseOnChange, checkboxes, ...params } = this.state; // eslint-disable-line no-unused-vars
-    const opt = [{ value: 'CA', label: 'California' }];
     return (
       <div>
         <div className="header">react-select-me</div>
