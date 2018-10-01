@@ -405,7 +405,7 @@ noItemsFound() {
 
 ### addNewItem: Bool | String | Function
 
-_Description: Bool: whether to display 'Add new item' option or not. String: 'Add new item' label. Function: 'Add new item' renderer. You must handle onClick event via `onAddNewItem` callback or your own callback in case of custom renderer._
+_Description: Bool: whether to display 'Add new item' option or not. String: 'Add new item' label. Function: 'Add new item' renderer. You must handle onClick event via `onAddNewItem` callback or your own callback in case of custom renderer. Note: for the 'Add new item' option to display, `searchable` must be true and `options` must be empty._
 
 Default: `false`
 
