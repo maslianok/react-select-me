@@ -29,10 +29,10 @@ export default class ReactSelectMe extends PureComponent {
     document.addEventListener('click', this.closeGlobal);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isOpened !== undefined && this.state.opened !== nextProps.isOpened) {
+  componentDidUpdate() {
+    if (this.props.isOpened !== undefined && this.state.opened !== this.props.isOpened) {
       this.setState({
-        opened: nextProps.isOpened,
+        opened: this.props.isOpened,
       });
     }
   }
