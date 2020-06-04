@@ -29,12 +29,16 @@ export default class ReactSelectMe extends PureComponent {
     document.addEventListener('click', this.closeGlobal);
   }
 
-  componentDidUpdate() {
-    if (this.props.isOpened !== undefined && this.state.opened !== this.props.isOpened) {
-      this.setState({
-        opened: this.props.isOpened,
-      });
+  static getDerivedStateFromProps({ isOpened }, state) {
+    const { opened } = state;
+    if (isOpened !== undefined && opened !== isOpened) {
+      return {
+        ...state,
+        opened: isOpened,
+      };
     }
+
+    return state;
   }
 
   componentWillUnmount() {
@@ -50,11 +54,12 @@ export default class ReactSelectMe extends PureComponent {
     }
   }
 
-  closeGlobal = e => {
+  closeGlobal = (e) => {
     const { isOpened, beforeClose } = this.props;
+    const { opened } = this.state;
     // @maslianok: when you decide to change this, please, keep in mind, that this case should work:
     // Open A -> Open B -> A should be closed
-    if (this.skipPropagation || !this.state.opened) {
+    if (this.skipPropagation || !opened) {
       this.skipPropagation = undefined;
       return;
     }
@@ -68,7 +73,7 @@ export default class ReactSelectMe extends PureComponent {
     this.skipPropagation = true;
   };
 
-  validateDataStructure = data => {
+  validateDataStructure = (data) => {
     const { toImmutable } = this.props;
     return typeof toImmutable === 'function' ? toImmutable(data) : data;
   };
@@ -78,7 +83,7 @@ export default class ReactSelectMe extends PureComponent {
 
     // search for this option in the `options` array
     const value = typeof selectedOption === 'object' ? selectedOption[valueKey] : selectedOption;
-    const option = options.find(o => this.getProp(o, valueKey) === value);
+    const option = options.find((o) => this.getProp(o, valueKey) === value);
 
     if (option || forbidPhantomSelection) {
       return option;
@@ -90,7 +95,7 @@ export default class ReactSelectMe extends PureComponent {
       : this.validateDataStructure({ [valueKey]: selectedOption, [labelKey]: selectedOption });
   };
 
-  setSearchValue = value => {
+  setSearchValue = (value) => {
     const { onSearch } = this.props;
     this.setState({
       search: value,
@@ -105,13 +110,15 @@ export default class ReactSelectMe extends PureComponent {
       onSearch(value);
     }
   };
+
   /** **************************************
    ************** Renderers *****************
    **************************************** */
   renderList = () => {
     const { addNewItem, searchable, listRenderer, virtualized, s, renderVirtualizedList } = this.props;
+    const { opened } = this.state;
 
-    if (!this.state.opened) {
+    if (!opened) {
       return undefined;
     }
 
@@ -142,7 +149,7 @@ export default class ReactSelectMe extends PureComponent {
     }
     let listContent;
     if (rowCount) {
-      listContent = options.map(option => this.renderOption(option, selectedOptions));
+      listContent = options.map((option) => this.renderOption(option, selectedOptions));
     } else {
       listContent =
         addNewItem && searchable && this.getSearchString() ? this.renderAddNewItem() : this.renderNoItemsFound();
@@ -158,7 +165,7 @@ export default class ReactSelectMe extends PureComponent {
   renderOption = (option, selectedOptions, style) => {
     const { valueKey, labelKey, optionRenderer, s } = this.props;
     const isSelected = selectedOptions.some(
-      selected => this.getProp(selected, valueKey) === this.getProp(option, valueKey),
+      (selected) => this.getProp(selected, valueKey) === this.getProp(option, valueKey),
     );
     const className = cs('dd__option', s.dd__option, {
       dd__selectedOption: isSelected,
@@ -195,7 +202,7 @@ export default class ReactSelectMe extends PureComponent {
 
     let selectedElements;
     if (!noOptionsSelected && (multiple || !searchable || !opened)) {
-      selectedElements = selectedOptions.map(option => valueRenderer(option, this.onChange));
+      selectedElements = selectedOptions.map((option) => valueRenderer(option, this.onChange));
     }
 
     return (
@@ -227,14 +234,14 @@ export default class ReactSelectMe extends PureComponent {
         onClick={this.onSearch}
         onPaste={this.onSearch}
         onKeyUp={this.onSearch}
-        ref={e => {
+        ref={(e) => {
           this.searchInput = e;
         }}
       />
     );
   };
 
-  renderSelectedItem = option => {
+  renderSelectedItem = (option) => {
     const { valueKey, labelKey, multiple, s } = this.props;
     const selectedOptionClasses = cs('dd__selectedItem', s.dd__selectedItem);
     const crossIconClasses = cs('dd__crossIcon', s.dd__crossIcon);
@@ -306,6 +313,7 @@ export default class ReactSelectMe extends PureComponent {
       </div>
     );
   };
+
   /** **************************************
    *************** Getters ******************
    **************************************** */
@@ -314,7 +322,7 @@ export default class ReactSelectMe extends PureComponent {
     return immutable ? option.get(key) : option[key];
   };
 
-  getCount = items => {
+  getCount = (items) => {
     const { immutable } = this.props;
     if (!items) {
       return false;
@@ -331,7 +339,7 @@ export default class ReactSelectMe extends PureComponent {
       }
 
       // options are strings or numbers
-      return options.map(option => this.validateDataStructure({ [labelKey]: option, [valueKey]: option }));
+      return options.map((option) => this.validateDataStructure({ [labelKey]: option, [valueKey]: option }));
     }
 
     // no options
@@ -347,10 +355,10 @@ export default class ReactSelectMe extends PureComponent {
     }
 
     const patchedOptions = multiple
-      ? value.map(v => this.patchSelectedOption(v, options))
+      ? value.map((v) => this.patchSelectedOption(v, options))
       : [this.patchSelectedOption(value, options)];
 
-    return this.validateDataStructure(patchedOptions.filter(option => !!option));
+    return this.validateDataStructure(patchedOptions.filter((option) => !!option));
   };
 
   getListProps = () => {
@@ -442,7 +450,7 @@ export default class ReactSelectMe extends PureComponent {
     if (multiple) {
       // prepare values for multiselect
       const values = this.getSelectedOptions();
-      const selectedIndex = values.findIndex(v => this.getProp(v, valueKey) === this.getProp(option, valueKey));
+      const selectedIndex = values.findIndex((v) => this.getProp(v, valueKey) === this.getProp(option, valueKey));
       if (selectedIndex === -1) {
         // add new option to selected values
         selectedValue = immutable ? values.push(option) : [...values, option];
@@ -463,17 +471,20 @@ export default class ReactSelectMe extends PureComponent {
     }
   };
 
-  onRemoveSelected = option => e => {
+  onRemoveSelected = (option) => (e) => {
     this.skipEventPropagation();
     this.onChange(option, true)(e);
   };
 
-  onToggle = e => {
+  onToggle = (e) => {
     if (this.skipPropagation) {
       return;
     }
 
-    const { props: { searchable, beforeOpen, beforeClose, isOpened, disabled }, state: { opened } } = this;
+    const {
+      props: { searchable, beforeOpen, beforeClose, isOpened, disabled },
+      state: { opened },
+    } = this;
 
     const nextState = isOpened !== undefined ? isOpened : !opened;
     const beforeFunc = nextState ? beforeOpen : beforeClose;
@@ -493,7 +504,7 @@ export default class ReactSelectMe extends PureComponent {
     }
   };
 
-  onSearch = evt => {
+  onSearch = (evt) => {
     // `document.documentMode` isn't undefined in IE only.
     // See more https://msdn.microsoft.com/library/cc196988(v=vs.85).aspx
     if (!this.searchInput || (evt.type === 'keyup' && !document.documentMode)) {
@@ -572,7 +583,7 @@ export default class ReactSelectMe extends PureComponent {
     }
   };
 
-  onAddNewItem = params => {
+  onAddNewItem = (params) => {
     const { onAddNewItem } = this.props;
     if (typeof onAddNewItem === 'function') {
       onAddNewItem(this.getSearchString(), this.getSelectedOptions(), params);
@@ -598,6 +609,7 @@ export default class ReactSelectMe extends PureComponent {
       onClose();
     }
   };
+
   /** **************************************
    **************** Render ******************
    **************************************** */
@@ -624,7 +636,7 @@ export default class ReactSelectMe extends PureComponent {
         <div
           className={selectControlClasses}
           onClick={toggleHandler}
-          ref={el => {
+          ref={(el) => {
             this.el = el;
           }}
         >

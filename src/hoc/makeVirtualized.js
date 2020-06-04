@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import List from 'react-virtualized/dist/commonjs/List';
 
-const makeVirtualized = ReactSelectMe =>
+const makeVirtualized = (ReactSelectMe) =>
   class ReactSelectMeHOC extends Component {
     renderVirtualizedList = ({
       rowRenderer,
@@ -26,7 +26,9 @@ const makeVirtualized = ReactSelectMe =>
         )}
       </AutoSizer>
     );
+
     render() {
+      // eslint-disable-next-line react/jsx-props-no-spreading
       return <ReactSelectMe {...this.props} renderVirtualizedList={this.renderVirtualizedList} virtualized />;
     }
   };
