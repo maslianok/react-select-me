@@ -1,5 +1,7 @@
 # react-select-me
 
+#### [Live demo](http://maslianok.github.io/react-select-me/)
+
 ## Advantages
 
 #### 🐜 Lightweight
@@ -24,42 +26,42 @@ Yes, yes! You can inspect dropdown list with help of DevTools. You know what I'm
 
 **Still not sure? We have a lot of other cool features. Take a look at our [examples](#examples).**
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Examples](#examples)
-  * [Live](#live)
-  * [Local](#local)
-* [HOC](#hoc)
-* [Properties:](#properties)
-  * [options: Array](#options-array)
-  * [value: Any](#value-any)
-  * [multiple: Bool](#multiple-bool)
-  * [searchable: Bool](#searchable-bool)
-  * [virtualized: Bool](#virtualized-bool)
-  * [onChange: Function](#onchange-function)
-  * [onSearch: Function](#onsearch-function)
-  * [onAddNewItem: Bool](#onaddnewitem-bool)
-  * [selectedValueRenderer: Function](#selectedvaluerenderer-function)
-  * [selectedBlockRenderer: Function](#selectedblockrenderer-function)
-  * [optionRenderer: Function](#optionrenderer-function)
-  * [listRenderer: Function](#listrenderer-function)
-  * [iconRenderer: Function](#iconrenderer-function)
-  * [noItemsFound: Bool | String | Function](#noitemsfound-bool--string--function)
-  * [addNewItem: Bool | String | Function](#addnewitem-bool--string--function)
-  * [isOpened: Bool](#isopened-bool)
-  * [beforeOpen: Function](#beforeopen-function)
-  * [beforeClose: Function](#beforeclose-function)
-  * [onOpen: Function](#onopen-function)
-  * [onClose: Function](#onclose-function)
-  * [searchClearOnClose: Bool](#searchclearonclose-bool)
-  * [listMaxHeight: Number](#listmaxheight-number)
-  * [listHeight: Number](#listheight-number)
-  * [optionHeight: Number | Function](#optionheight-number--function)
-  * [listPosition: String](#listposition-string)
-  * [getWrapper: Function](#getwrapper-function)
-  * [boundaryMargin: Number](#boundarymargin-number)
-  * [forbidPhantomSelection: Bool](#forbidphantomselection-bool)
-  * [s: Object](#s-object)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+  - [Live](#live)
+  - [Local](#local)
+- [HOC](#hoc)
+- [Properties:](#properties)
+  - [options: Array](#options-array)
+  - [value: Any](#value-any)
+  - [multiple: Bool](#multiple-bool)
+  - [searchable: Bool](#searchable-bool)
+  - [virtualized: Bool](#virtualized-bool)
+  - [onChange: Function](#onchange-function)
+  - [onSearch: Function](#onsearch-function)
+  - [onAddNewItem: Bool](#onaddnewitem-bool)
+  - [selectedValueRenderer: Function](#selectedvaluerenderer-function)
+  - [selectedBlockRenderer: Function](#selectedblockrenderer-function)
+  - [optionRenderer: Function](#optionrenderer-function)
+  - [listRenderer: Function](#listrenderer-function)
+  - [iconRenderer: Function](#iconrenderer-function)
+  - [noItemsFound: Bool | String | Function](#noitemsfound-bool--string--function)
+  - [addNewItem: Bool | String | Function](#addnewitem-bool--string--function)
+  - [isOpened: Bool](#isopened-bool)
+  - [beforeOpen: Function](#beforeopen-function)
+  - [beforeClose: Function](#beforeclose-function)
+  - [onOpen: Function](#onopen-function)
+  - [onClose: Function](#onclose-function)
+  - [searchClearOnClose: Bool](#searchclearonclose-bool)
+  - [listMaxHeight: Number](#listmaxheight-number)
+  - [listHeight: Number](#listheight-number)
+  - [optionHeight: Number | Function](#optionheight-number--function)
+  - [listPosition: String](#listposition-string)
+  - [getWrapper: Function](#getwrapper-function)
+  - [boundaryMargin: Number](#boundarymargin-number)
+  - [forbidPhantomSelection: Bool](#forbidphantomselection-bool)
+  - [s: Object](#s-object)
 
 ## Installation
 
@@ -73,7 +75,10 @@ import Select from 'react-select-me';
 // IMPORTANT If you want to provide default styles you have to import them
 import 'react-select-me/lib/ReactSelectMe.css';
 
-const options = [{ value: 1, label: 'Label 1' }, { value: 2, label: 'Label 2' }];
+const options = [
+  { value: 1, label: 'Label 1' },
+  { value: 2, label: 'Label 2' },
+];
 
 export default class App extends React.Component {
   constructor(props) {
@@ -158,8 +163,8 @@ Default: `undefined`
 
 Examples:
 
-* List of primitives: `[1, 2]`
-* List of objects: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
+- List of primitives: `[1, 2]`
+- List of objects: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
 ### value: Any
 
@@ -169,10 +174,10 @@ Default: `undefined`
 
 Examples:
 
-* Primitive: `1`
-* Object: `{value: 1, label: 'Label 1'}`
-* Array of primitives for multiselect: `[1, 2]`
-* Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
+- Primitive: `1`
+- Object: `{value: 1, label: 'Label 1'}`
+- Array of primitives for multiselect: `[1, 2]`
+- Array of objects for multiselect: `[{value: 1, label: 'Label 1'}, {value: 2, label: 'Label 2'}]`
 
 ### multiple: Bool
 
@@ -206,7 +211,7 @@ Default: `undefined`
 
 Arguments:
 
-* `value: Array|Object|String|Number`: selected option (or array of options for multi select)
+- `value: Array|Object|String|Number`: selected option (or array of options for multi select)
 
 Example:
 
@@ -224,7 +229,7 @@ Default: `undefined`
 
 Arguments:
 
-* `search: String`: search string
+- `search: String`: search string
 
 Example:
 
@@ -266,7 +271,7 @@ Default: `undefined`
 
 Arguments:
 
-* `search: String`: search string
+- `search: String`: search string
 
 ### selectedValueRenderer: Function
 
@@ -276,8 +281,8 @@ Default: `undefined`
 
 Arguments:
 
-* `option: Object|String|Number`: option to render
-* `onRemove: Function`: default function to remove value
+- `option: Object|String|Number`: option to render
+- `onRemove: Function`: default function to remove value
 
 Example:
 
@@ -295,10 +300,10 @@ Default: `undefined`
 
 Arguments:
 
-* `selectedOptions: Array`: currently selected options
-* `onRemove: Function`: default function to remove value
-* `selectedValueRenderer: Function`: default function to render selected value
-* `searchInputRenderer: Function`: default function to render search block
+- `selectedOptions: Array`: currently selected options
+- `onRemove: Function`: default function to remove value
+- `selectedValueRenderer: Function`: default function to render selected value
+- `searchInputRenderer: Function`: default function to render search block
 
 Example:
 
@@ -316,8 +321,8 @@ Default: `undefined`
 
 Arguments:
 
-* `option: Object|String|Number`: option to render
-* `selectedOptions: Array`: currently selected options
+- `option: Object|String|Number`: option to render
+- `selectedOptions: Array`: currently selected options
 
 Example:
 
@@ -333,15 +338,15 @@ _Description: function to render the list_
 
 Arguments:
 
-* `options: Array`: list of options
-* `selectedOptions: Array`: currently selected options
-* `optionRenderer: Function`: default option renderer
-* `onChange: Function`: default onChange callback
-* `onToggleList: Function`: toggle list visibility
+- `options: Array`: list of options
+- `selectedOptions: Array`: currently selected options
+- `optionRenderer: Function`: default option renderer
+- `onChange: Function`: default onChange callback
+- `onToggleList: Function`: toggle list visibility
 
 Example:
 
-* Simple
+- Simple
 
 ```javascript
 listRenderer(options, selectedOptions, optionRenderer) {
@@ -349,7 +354,7 @@ listRenderer(options, selectedOptions, optionRenderer) {
 }
 ```
 
-* Advanced
+- Advanced
 
 ```javascript
 listRenderer(options, selectedOptions, optionRenderer, onChange, onToggle) {
@@ -379,7 +384,7 @@ Default: `undefined`
 
 Arguments:
 
-* `isOpened: Bool`: whether the list opened
+- `isOpened: Bool`: whether the list opened
 
 Example:
 
@@ -431,7 +436,7 @@ Default: `undefined`
 
 Arguments:
 
-* `event: Object`: event
+- `event: Object`: event
 
 ### beforeClose: Function
 
@@ -481,9 +486,9 @@ Default: `auto`
 
 Available values:
 
-* `top`: expand to top
-* `bottom`: expand to bottom
-* `auto`: auto detection based on `wrapper` element
+- `top`: expand to top
+- `bottom`: expand to bottom
+- `auto`: auto detection based on `wrapper` element
 
 ### getWrapper: Function
 
@@ -550,7 +555,7 @@ List of supported classes:
 
 Examples:
 
-* If you are using css modules you can import default styles directly to the component:
+- If you are using css modules you can import default styles directly to the component:
 
 ```javascript
 import Select from 'react-select-me';
@@ -559,7 +564,7 @@ import s from 'react-select-me/src/ReactSelectMe.css';
 <Select s={s} {...otherProps} />
 ```
 
-* If you want to customize any element with help of your own classes
+- If you want to customize any element with help of your own classes
 
 ```javascript
 const classNames = {
