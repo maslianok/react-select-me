@@ -6,7 +6,7 @@
 
 #### 🐜 Lightweight
 
-Only 4.28kb gzipped.
+![minzip size](https://badgen.net/bundlephobia/minzip/react-dropdown)
 
 #### 🐙 Highly scalable and extendable
 
