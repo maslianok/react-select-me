@@ -6,7 +6,7 @@
 
 #### 🐜 Lightweight
 
-![minzip size](https://badgen.net/bundlephobia/minzip/react-dropdown)
+![minzip size](https://badgen.net/bundlephobia/minzip/react-select-me)
 
 #### 🐙 Highly scalable and extendable
 
