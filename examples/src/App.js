@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import cs from 'classnames';
 
