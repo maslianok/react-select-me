@@ -301,7 +301,7 @@ Default: `undefined`
 Arguments:
 
 - `selectedOptions: Array`: currently selected options
-- `onRemove: Function`: default function to remove value
+- `onChange: Function`: onChange callback
 - `selectedValueRenderer: Function`: default function to render selected value
 - `searchInputRenderer: Function`: default function to render search block
 
