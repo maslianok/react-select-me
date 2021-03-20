@@ -294,16 +294,16 @@ selectedValueRenderer(option, onRemove) {
 
 ### selectedBlockRenderer: Function
 
-_Description: function to render block with selected options_
+_Description: the function to render the whole block with selected options_
 
 Default: `undefined`
 
 Arguments:
 
-- `selectedOptions: Array`: currently selected options
-- `onChange: Function`: onChange callback
-- `selectedValueRenderer: Function`: default function to render selected value
-- `searchInputRenderer: Function`: default function to render search block
+- `selectedOptions: Array`: the options to be rendered. These are the selected options. You must render them inside the `selectedBlockRenderer` function
+- `onRemove: Function`: is the function that must be triggered on a certain option when you want to remove it. For example, you receive [1,2,3,4] as the `selectedOptions`, so you have to call `onRemove(1)` in order to deselect option 1
+- `selectedValueRenderer: Function`: is the default value renderer. The library uses this function in order to render every single selected option. Something like `selectedOptions.map(option => selectedValueRenderer(option))`. You can use it or skip and implement your own value renderer.
+- `searchInputRenderer: Function`: is the default function to render search input. The same as above: use it or implement you own logic
 
 Example:
 
