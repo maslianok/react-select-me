@@ -6,8 +6,8 @@
     "url": "https://github.com/maslianok/react-select-me/issues"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0 || ^16.0.0",
-    "react-dom": "^0.14.7 || ^15.0.0 || ^16.0.0"
+    "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0",
+    "react-dom": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -36,7 +36,8 @@
   "keywords": [
     "react",
     "dropdown",
-    "select"
+    "select",
+    "picker"
   ],
   "license": "MIT",
   "main": "lib/ReactSelectMe.js",
